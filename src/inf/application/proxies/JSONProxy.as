@@ -36,7 +36,7 @@ package inf.application.proxies {
 		
 		/**
 		 * Constructor
-		 * @param String baseUrl the name of the script with its path (relative or absolute) that responds to the queries of this proxy
+		 * @param String baseUrl the name of the script with its path (absolute or relative to swf location) that responds to the queries of this proxy
 		 * @param String proxyName for pureMVC registration
 		 */
 		public function JSONProxy(baseUrl:String, proxyName:String = null) {

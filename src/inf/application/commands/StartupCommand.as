@@ -1,6 +1,8 @@
 package inf.application.commands {
 	
 	import inf.application.ApplicationFacade;
+	import inf.application.mediators.ApplicationMediator;
+	import inf.application.proxies.HandshakeProxy;
 	import inf.utils.Logger;
 	
 	import org.puremvc.as3.interfaces.ICommand;
@@ -15,6 +17,15 @@ package inf.application.commands {
 			Logger.debug("Executing startup command...");
 			
 			// commands....
+			var facade:ApplicationFacade = ApplicationFacade.getInstance();
+			
+			// register handshake proxy
+			facade.registerProxy(new HandshakeProxy());			
+			
+			if (notification.getBody() is flash_app) {
+				// register ApplicationMediator
+				this.facade.registerMediator(new ApplicationMediator(notification.getBody() as flash_app));
+			}
 			
 			this.sendNotification(ApplicationFacade.APP_INITALIZED, null);
 		}

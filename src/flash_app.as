@@ -20,6 +20,7 @@ package {
 			
 			this._facade.startup(this);
 			
+			
 		}
 	}
 }

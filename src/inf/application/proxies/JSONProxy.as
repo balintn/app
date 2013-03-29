@@ -57,7 +57,7 @@ package inf.application.proxies {
 		 * @param Object params parameters to add to the query for the server
 		 * @param String request method GET or POST (<code>URLRequestMethod.GET</code> or <code>URLRequestMethod.POST</code>)
 		 */ 
-		protected function load(params:Object = {}, method:String = URLRequestMethod.GET):void {
+		protected function load(params:Object = null, method:String = URLRequestMethod.GET):void {
 			
 			var request:URLRequest = new URLRequest(this._baseUrl);
 			
@@ -67,7 +67,7 @@ package inf.application.proxies {
 			}
 
 			request.method = method;
-			_loader.load(request);
+			this._loader.load(request);
 		}
 		
 		
@@ -92,7 +92,7 @@ package inf.application.proxies {
 		 * @param Event event
 		 * @return Object
 		 */
-		protected function onComplete(event:Event):void {
+		protected function onComplete(event:Event):Object {
 			try {
 				var decoder:JSONDecoder = new JSONDecoder(_loader.data, false);
 				var response:Object = decoder.getValue();

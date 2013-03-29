@@ -20,7 +20,7 @@ package inf.application.commands {
 			var facade:ApplicationFacade = ApplicationFacade.getInstance();
 			
 			// register handshake proxy
-			facade.registerProxy(new HandshakeProxy());			
+			facade.registerProxy(new HandshakeProxy("http://localhost/flashapp/getInitialData.php"));			
 			
 			if (notification.getBody() is flash_app) {
 				// register ApplicationMediator

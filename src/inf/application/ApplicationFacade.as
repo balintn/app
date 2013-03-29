@@ -26,6 +26,12 @@ package inf.application {
 		public static const APP_INITALIZED:String = "onAppInitialized";
 		
 		/**
+		 * Notification when handshake data arrived from server
+		 * @var String
+		 */
+		public static const APP_HANDSHAKE_DATA_LOADED:String = "onHandshakeDataLoaded";
+				
+		/**
 		 * Application
 		 * @var Sprite
 		 */

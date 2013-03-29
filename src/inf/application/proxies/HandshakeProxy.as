@@ -2,22 +2,26 @@ package inf.application.proxies {
 	import flash.events.Event;
 	import flash.net.URLRequestMethod;
 	
-	import inf.application.models.HandshakeModel;
+	import inf.application.ApplicationFacade;
+	import inf.application.models.EnvironmentModel;
 	import inf.utils.Logger;
 	
 	/**
-	 * This proxy loads handshake data from server and creates a <code>HandshakeModel</code> object  
+	 * This proxy loads handshake data from server and creates a <code>EnvironmentModel</code> object  
 	 * @author inf
 	 */
 	public class HandshakeProxy extends JSONProxy {
 		
 		public static const NAME:String = "handshakeProxy";
 		
+		private static const PROP_APP_SETTINGS:String = "appSettings";
+		private static const PROP_THUMBNAILS:String = "thumbnails";
+		
 		/**
 		 * Model
 		 * @var HandshakeModel _model (read only)
 		 */
-		private var _model:HandshakeModel;
+		private var _model:EnvironmentModel;
 		
 		
 		/**
@@ -42,7 +46,7 @@ package inf.application.proxies {
 		 * @param Event event
 		 * @return Object
 		 */
-		protected override function onComplete(event:Event):void {
+		protected override function onComplete(event:Event):Object {
 			
 			Logger.info("Handshake data arrived..");
 			
@@ -50,9 +54,16 @@ package inf.application.proxies {
 			
 			if (response != null) {
 				
-				// create model...
+				// create environment model...
+				if (response.hasOwnProperty(HandshakeProxy.PROP_APP_SETTINGS) && response[HandshakeProxy.PROP_APP_SETTINGS] instanceof Object) {
+					var env:EnvironmentModel = EnvironmentModel.getInstance();
+					env.populateData(response[HandshakeProxy.PROP_APP_SETTINGS]);
+				}
 				
+				// TODO create thumb list
 				
+				// sending notification
+				this.sendNotification(ApplicationFacade.APP_HANDSHAKE_DATA_LOADED, response);
 			}
 			
 			return response;
@@ -60,9 +71,9 @@ package inf.application.proxies {
 		
 		/**
 		 * Returns model
-		 * @return HandshakeModel
+		 * @return EnvironmentModel
 		 */
-		public function get model():HandshakeModel {
+		public function get model():EnvironmentModel {
 			return this._model;
 		}
 	}

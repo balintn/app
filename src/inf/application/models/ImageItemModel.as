@@ -16,8 +16,8 @@ package inf.application.models {
 		private var _marked:Boolean; 
 		
 		
-		public function ImageItemModel(source:Object=null) {
-			super(source);
+		public function ImageItemModel() {
+			super();
 		}
 		
 		public function setId(value:uint):void {

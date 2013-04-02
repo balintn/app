@@ -17,10 +17,8 @@ package inf.application.models {
 		
 		/**
 		 * Constructor
-		 * @param Object source populates data from this object 
 		 */
-		public function Model(source:Object = null){
-			if (source != null) this._initializeData(source);
+		public function Model(){
 		}
 		
 		/**

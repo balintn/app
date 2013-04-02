@@ -7,8 +7,8 @@ package inf.application.models {
 	 */
 	public class BaseModel extends Model {
 		
-		public function BaseModel(source:Object=null) {
-			super(source);
+		public function BaseModel() {
+			super();
 		}
 		
 		/**

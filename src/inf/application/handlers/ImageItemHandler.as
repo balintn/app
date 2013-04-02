@@ -36,7 +36,11 @@ package inf.application.handlers {
 		 * @param items Array
 		 */
 		public static function createModelsFromArray(items:Array):void {
+			
+			ImageItemHandler._init();
+			
 			Logger.debug("Creating models...");
+			
 			ImageItemHandler._items = [];
 			var i:uint;
 			for (i = 1; i <= items.length; i++) {

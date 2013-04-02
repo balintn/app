@@ -8,60 +8,18 @@ package inf.application.models {
 	 */
 	public final class EnvironmentModel extends BaseModel {
 		
-		/**
-		 * Editor align left
-		 * @var String
-		 */
-		public static const EDITOR_ALIGN_LEFT:String = "left";
 		
 		/**
-		 * Editor align right
-		 * @var String
-		 */
-		public static const EDITOR_ALIGN_RIGHT:String = "right";
-		
-
-		/**
-		 * App border color
+		 * App background color
 		 * @var uint
 		 */
-		private var _mainBorderColor:uint;
+		private var _appBackgroundColor:uint;
 		
 		/**
-		 * Editor align
-		 * @var String
-		 */
-		private var _editorColumnAlign:String;
-		
-		/**
-		 * Editor column width
+		 * App background alpha
 		 * @var uint
 		 */
-		private var _editorColumnWidth:uint;
-		
-		/**
-		 * Editor background color
-		 * @var uint
-		 */
-		private var _editorColumnBackgroundColor:uint;
-		
-		/**
-		 * Thumbnail list column widht
-		 * @var uint
-		 */
-		private var _thumbColumnWidth:uint;
-		
-		/**
-		 * Thumbnail list background color
-		 * @var uint
-		 */ 
-		private var _thumbColumnBackgroundColor:uint;
-		
-		/**
-		 * Inner border color
-		 * @var uint
-		 */
-		private var _innerBorderColor:uint;
+		private var _appBackgroundAlpha:Number;
 		
 		/**
 		 * Base url
@@ -69,6 +27,10 @@ package inf.application.models {
 		 */
 		private var _baseUrl:String;
 		
+		/**
+		 * Singleton instance
+		 * @var EnvironmentModel
+		 */
 		private static var _instance:EnvironmentModel;
 		
 		
@@ -77,83 +39,29 @@ package inf.application.models {
 			super();
 		}
 		
-		public function get mainBorderColor():uint {
-			return this._mainBorderColor;
+		public function get appBackgroundColor():uint {
+			return this._appBackgroundColor;
 		}
 		
-		public function get editorColumnAlign():String {
-			return this._editorColumnAlign;
-		}
-		
-		public function get editorColumnWidth():uint {
-			return this._editorColumnWidth;
-		}
-		
-		public function get editorColumnBackgroundColor():uint {
-			return this._editorColumnBackgroundColor;
-		}
-		
-		public function get thumbColumnWidth():uint {
-			return this._thumbColumnWidth;
-		}
-		
-		public function get thumbColumnBackgroundColor():uint {
-			return this._thumbColumnBackgroundColor;
-		}
-		
-		public function get innerBorderColor():uint {
-			return this._innerBorderColor;
+		public function get appBackgroundAlpha():Number {
+			return this._appBackgroundAlpha;
 		}
 		
 		public function get baseUrl():String {
 			return this._baseUrl;
 		}
 		
-		
-		public function setMainBorderColor(value:String):void {
-			this._mainBorderColor = value as uint;
+		public function setAppBackgroundColor(value:String):void {
+			this._appBackgroundColor = parseInt(value, 16);
 		}
 		
-		public function setEditorColumnAlign(value:String):void {
-			
-			switch (value) {
-				case EnvironmentModel.EDITOR_ALIGN_LEFT:
-				case EnvironmentModel.EDITOR_ALIGN_RIGHT:
-					this._editorColumnAlign = value;		
-					break;
-				
-				default:
-					Logger.warn("Unknown editor align value! Using default value (EnvironmentModel.EDITOR_ALIGN_LEFT)");
-					this._editorColumnAlign = EnvironmentModel.EDITOR_ALIGN_LEFT;
-			}
-			
-		}
-		
-		public function setEditorColumnWidth(value:String):void {
-			this._editorColumnWidth = parseInt(value);
-		}
-		
-		public function setEditorColumnBackgroundColor(value:String):void {
-			this._editorColumnBackgroundColor = parseInt(value, 16);
-		}
-		
-		public function setThumbColumnWidth(value:String):void {
-			this._thumbColumnWidth = parseInt(value);
-		}
-		
-		public function setThumbColumnBackgroundColor(value:String):void {
-			this._thumbColumnBackgroundColor = parseInt(value, 16);
-		}
-		
-		public function setInnerBorderColor(value:String):void {
-			this._innerBorderColor = parseInt(value, 16);
+		public function setAppBackgroundAlpha(value:Number):void {
+			this._appBackgroundAlpha = value;
 		}
 		
 		public function setBaseUrl(value:String):void {
 			this._baseUrl = value;
 		}
-		
-		
 		
 		/**
 		 * Returns EnvironmentModel instance

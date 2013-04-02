@@ -3,7 +3,9 @@ package inf.application.proxies {
 	import flash.net.URLRequestMethod;
 	
 	import inf.application.ApplicationFacade;
+	import inf.application.handlers.ImageItemHandler;
 	import inf.application.models.EnvironmentModel;
+	import inf.application.models.ImageItemModel;
 	import inf.utils.Logger;
 	
 	/**
@@ -15,7 +17,7 @@ package inf.application.proxies {
 		public static const NAME:String = "handshakeProxy";
 		
 		private static const PROP_APP_SETTINGS:String = "appSettings";
-		private static const PROP_THUMBNAILS:String = "thumbnails";
+		private static const PROP_ITEMS:String = "items";
 		
 		/**
 		 * Model
@@ -55,12 +57,17 @@ package inf.application.proxies {
 			if (response != null) {
 				
 				// create environment model...
-				if (response.hasOwnProperty(HandshakeProxy.PROP_APP_SETTINGS) && response[HandshakeProxy.PROP_APP_SETTINGS] instanceof Object) {
+				if (response.hasOwnProperty(HandshakeProxy.PROP_APP_SETTINGS) && response[HandshakeProxy.PROP_APP_SETTINGS] is Object) {
 					var env:EnvironmentModel = EnvironmentModel.getInstance();
 					env.populateData(response[HandshakeProxy.PROP_APP_SETTINGS]);
 				}
+				Logger.info("Environment model created..");
 				
-				// TODO create thumb list
+				// create image items
+				if (response.hasOwnProperty(HandshakeProxy.PROP_ITEMS) && response[HandshakeProxy.PROP_ITEMS] is Array) {
+					ImageItemHandler.createModelsFromArray(response[HandshakeProxy.PROP_ITEMS]);
+				}
+				Logger.info("Item models created..");
 				
 				// sending notification
 				this.sendNotification(ApplicationFacade.APP_HANDSHAKE_DATA_LOADED, response);

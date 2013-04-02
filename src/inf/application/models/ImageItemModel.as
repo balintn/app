@@ -20,19 +20,19 @@ package inf.application.models {
 			super();
 		}
 		
-		public function setId(value:uint):void {
+		internal function setId(value:uint):void {
 			this._id = value;	
 		}
 		
-		public function setTitle(value:String):void {
+		internal function setTitle(value:String):void {
 			this._title = value;	
 		}
 		
-		public function setFilePath(value:String):void {
+		internal function setFilePath(value:String):void {
 			this._filePath = value;
 		}
 		
-		public function setMarked(value:uint):void {
+		internal function setMarked(value:uint):void {
 			this._marked = value as Boolean;
 		}
 		

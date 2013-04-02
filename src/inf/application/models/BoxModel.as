@@ -20,43 +20,43 @@ package inf.application.models {
 			super();
 		}
 		
-		public function setWidth(value:Number):void {
+		internal function setWidth(value:Number):void {
 			this._width = value;	
 		}
 		
-		public function setHeight(value:Number):void {
+		internal function setHeight(value:Number):void {
 			this._height = value;
 		}
 		
-		public function setAlign(value:String):void {
+		internal function setAlign(value:String):void {
 			this._align = value;
 		}
 		
-		public function setX(value:Number):void {
+		internal function setX(value:Number):void {
 			this._x = value;
 		}
 		
-		public function setY(value:Number):void {
+		internal function setY(value:Number):void {
 			this._y = value;
 		}
 		
-		public function setBackgroundColor(value:String):void {
+		internal function setBackgroundColor(value:String):void {
 			this._backgroundColor = parseInt(value, 16);
 		}
 		
-		public function setBackgroundAlpha(value:Number):void {
+		internal function setBackgroundAlpha(value:Number):void {
 			this._backgroundAlpha = value;
 		}
 		
-		public function setBorderSize(value:Number):void {
+		internal function setBorderSize(value:Number):void {
 			this._borderSize = value;
 		}
 		
-		public function setBorderColor(value:String):void {
+		internal function setBorderColor(value:String):void {
 			this._borderColor = parseInt(value, 16);
 		}
 		
-		public function setBorderAlpha(value:Number):void {
+		internal function setBorderAlpha(value:Number):void {
 			this._borderAlpha = value;
 		}
 		

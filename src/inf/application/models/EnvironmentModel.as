@@ -51,15 +51,15 @@ package inf.application.models {
 			return this._baseUrl;
 		}
 		
-		public function setAppBackgroundColor(value:String):void {
+		internal function setAppBackgroundColor(value:String):void {
 			this._appBackgroundColor = parseInt(value, 16);
 		}
 		
-		public function setAppBackgroundAlpha(value:Number):void {
+		internal function setAppBackgroundAlpha(value:Number):void {
 			this._appBackgroundAlpha = value;
 		}
 		
-		public function setBaseUrl(value:String):void {
+		internal function setBaseUrl(value:String):void {
 			this._baseUrl = value;
 		}
 		

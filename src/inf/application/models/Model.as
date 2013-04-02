@@ -3,7 +3,7 @@ package inf.application.models {
 	
 	/**
 	 * Internal abstract Model class
-	 * You have to extend this class (in this package) and override <code>_initializeData()</code> method
+	 * You have to extend this class and override <code>_initializeData()</code> method
 	 *  
 	 * @author inf 
 	 */

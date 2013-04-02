@@ -56,7 +56,9 @@ package inf.application.handlers {
 		 */
 		public static function addModelFromObject(source:Object):void {
 			ImageItemHandler._init();
-			ImageItemHandler._items.push(new ImageItemModel(source));
+			var tmp:ImageItemModel = new ImageItemModel();
+			tmp.populateData(source);
+			ImageItemHandler._items.push(tmp);
 		}
 		
 		/**

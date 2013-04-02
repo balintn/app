@@ -6,7 +6,7 @@ package inf.application.models {
 	 * Use <code>EnvironmentModel.getInstance()</code> method to get instance
 	 * @author inf
 	 */
-	public final class EnvironmentModel extends Model {
+	public final class EnvironmentModel extends BaseModel {
 		
 		/**
 		 * Editor align left
@@ -77,24 +77,6 @@ package inf.application.models {
 			super();
 		}
 		
-		/**
-		 * Initializes the model properties with the values given in source
-		 * @param Object source
-		 * @throw Error throws error if failed to initialize model
-		 */ 
-		protected override function _initializeData(source:Object):void {
-			
-			for (var key:String in source) {
-				var funcName:String = "set" + key.charAt(0).toUpperCase() + key.substr(1);
-				try {
-					this[funcName](source[key]);
-				} catch(e:Error) {
-					Logger.error("Failed to initialize EnvironmentModel! Exeception: " + e.message);
-				}
-			}
-		}
-		
-		
 		public function get mainBorderColor():uint {
 			return this._mainBorderColor;
 		}
@@ -128,7 +110,7 @@ package inf.application.models {
 		}
 		
 		
-		private function setMainBorderColor(value:String):void {
+		public function setMainBorderColor(value:String):void {
 			this._mainBorderColor = value as uint;
 		}
 		
@@ -167,7 +149,7 @@ package inf.application.models {
 			this._innerBorderColor = parseInt(value, 16);
 		}
 		
-		protected function setBaseUrl(value:String):void {
+		public function setBaseUrl(value:String):void {
 			this._baseUrl = value;
 		}
 		

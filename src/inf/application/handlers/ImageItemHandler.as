@@ -22,6 +22,12 @@ package inf.application.handlers {
 		private static var _items:Hash;
 		
 		/**
+		 * Stores items by their id
+		 * @var Object
+		 */
+		private static var _itemsById:Object;
+		
+		/**
 		 * Tells whether handler is initialized or not
 		 * @var Boolean
 		 */ 
@@ -89,13 +95,18 @@ package inf.application.handlers {
 		 */
 		public static function getItemById(id:uint):ImageItemModel {
 			ImageItemHandler._init();
-			var elements:Dictionary = ImageItemHandler._items.getAll();
-			for (var key:Object in elements) {
-				if (key.id == id) {
-					return key as ImageItemModel;
+			
+			if (ImageItemHandler._itemsById == null) {
+				var tmp:Object = {};
+				
+				var elements:Dictionary = ImageItemHandler._items.getAll();
+				for (var key:Object in elements) {
+					tmp[key.id] = key;
 				}
+				ImageItemHandler._itemsById = tmp;
 			}
-			return null;
+			
+			return ImageItemHandler._itemsById.hasOwnProperty(id) ? ImageItemHandler._itemsById[id] : null;
 		}
 		
 		/**

@@ -1,5 +1,8 @@
 package inf.application.handlers {
+	
+	import inf.application.ApplicationFacade;
 	import inf.application.models.ImageItemModel;
+	import inf.application.proxies.ImageLoaderProxy;
 	import inf.utils.Hash;
 	import inf.utils.Logger;
 	
@@ -10,9 +13,16 @@ package inf.application.handlers {
 	 */
 	public class ImageItemHandler {
 		
-		
+		/**
+		 * Stored items in key. If value is false then images did not download yet else true
+		 * @var Hash
+		 */ 
 		private static var _items:Hash;
 		
+		/**
+		 * Tells whether handler is initialized or not
+		 * @var Boolean
+		 */ 
 		private static var _initialized:Boolean = false;
 		
 
@@ -42,7 +52,7 @@ package inf.application.handlers {
 			
 			Logger.debug("Creating models...");
 			
-			ImageItemHandler._items = [];
+			ImageItemHandler._items = new Hash();
 			var i:uint;
 			for (i = 1; i <= items.length; i++) {
 				ImageItemHandler.addModelFromObject(items[i - 1]);
@@ -59,7 +69,7 @@ package inf.application.handlers {
 			ImageItemHandler._init();
 			var tmp:ImageItemModel = new ImageItemModel();
 			tmp.populateData(source);
-			ImageItemHandler.set(tmp, false);
+			ImageItemHandler._items.set(tmp, false);
 		}
 		
 		/**
@@ -79,11 +89,43 @@ package inf.application.handlers {
 			ImageItemHandler._init();
 			for (var key:Object in ImageItemHandler._items) {
 				if (key.id == id) {
-					return key;
+					return key as ImageItemModel;
 				}
 			}
 			return null;
 		}
 		
+		/**
+		 * Removes item by model class instance
+		 */
+		public static function removeItem(item:ImageItemModel):void {
+			ImageItemHandler._init();
+			ImageItemHandler._items.remove(item);
+		}
+		
+		/**
+		 * Removes image items
+		 */
+		public static function removeItems():void {
+			ImageItemHandler._init();
+			ImageItemHandler._items.reset();
+		}
+		
+		/**
+		 * Loads images
+		 */
+		public static function loadImages():void {
+			ImageItemHandler._init();
+			
+			var proxy:ImageLoaderProxy = ApplicationFacade.getInstance().retrieveProxy(ImageLoaderProxy.NAME) as ImageLoaderProxy;
+			
+			for (var key:Object in ImageItemHandler._items.getAll()) {
+				var value:Boolean = ImageItemHandler._items.get(key);
+				if (value === false) {
+					proxy.loadImage(key.filePath, key.id);
+				}
+			}
+			
+		}
 	}
 }

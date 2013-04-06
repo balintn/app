@@ -6,10 +6,12 @@ package inf.application.mediators {
 	import flash.events.Event;
 	
 	import inf.application.ApplicationFacade;
+	import inf.application.handlers.ImageItemHandler;
 	import inf.application.models.EditorBoxModel;
 	import inf.application.models.EnvironmentModel;
 	import inf.application.models.ItemsBoxModel;
 	import inf.application.proxies.HandshakeProxy;
+	import inf.application.proxies.ImageLoaderProxy;
 	import inf.application.views.EditorView;
 	import inf.application.views.ItemsView;
 	import inf.application.views.widgets.BackgroundedSprite;
@@ -100,6 +102,13 @@ package inf.application.mediators {
 		private function itemsViewAddedToStage(event:Event):void {
 			// render
 			(event.currentTarget as ItemsView).render();
+			
+			// register image loader proxy
+			Logger.debug("Register ImageLoaderProxy...");
+			this.facade.registerProxy(new ImageLoaderProxy());
+			
+			// load images
+			ImageItemHandler.loadImages();
 		}
 		
 		private function editorViewAddedToStage(event:Event):void {

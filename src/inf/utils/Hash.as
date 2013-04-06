@@ -28,15 +28,20 @@ package inf.utils {
 		 * @return Object
 		 */
 		public function get(key:Object, defValue:Object = null):Object {
-			return this._elements.hasOwnProperty(key) ? this._elements[key] : defValue;
+			for (var listItemKey:Object in this._elements) {
+				if (listItemKey === key) {
+					return this._elements[key];
+				}
+			}
+			return null;
 		}
 		
 		
 		/**
 		 * Returns elements object
-		 * @return Object
+		 * @return Dictionary
 		 */
-		public function getAll():Object {
+		public function getAll():Dictionary {
 			return this._elements;
 		}
 		

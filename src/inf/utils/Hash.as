@@ -16,7 +16,7 @@ package inf.utils {
 		 * Constructor
 		 */
 		public function Hash() {
-			this._elements = new Object();
+			this._elements = {};
 		}
 		
 		
@@ -59,9 +59,16 @@ package inf.utils {
 		 * @param Object value
 		 * @return Object value
 		 */
-		public function set (key:Object, value:Object = null):Object {
+		public function set(key:Object, value:Object = null):Object {
 			this._elements[key] = value;
 			return value;
+		}
+		
+		/**
+		 * Resets hash
+		 */
+		public function reset():void {
+			this._elements = {};
 		}
 		
 	}

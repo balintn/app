@@ -9,7 +9,7 @@ package inf.application.views.components {
 		
 		private var _image:DisplayObject;
 		
-		public function ImageItemComponent(width, height, image:DisplayObject = null, align:String=BackgroundedSprite.LEFT_TOP, bgColor:uint=0xffffff, bgAlpha:Number=0, borderSize:Number=0, borderColor:uint=0, borderAlpha:Number=0) {
+		public function ImageItemComponent(width = 0, height = 0, image:DisplayObject = null, align:String=BackgroundedSprite.LEFT_TOP, bgColor:uint=0xffffff, bgAlpha:Number=0, borderSize:Number=0, borderColor:uint=0, borderAlpha:Number=0) {
 			super(width, height, align, bgColor, bgAlpha, borderSize, borderColor, borderAlpha);
 			
 			if (image != null) {
@@ -31,7 +31,10 @@ package inf.application.views.components {
 			this.addChild(image);
 		}
 		
-
+		public function get image():DisplayObject {
+			return this._image;
+		}
+		
 		public override function render():void {
 			this._image.visible = true;
 		}

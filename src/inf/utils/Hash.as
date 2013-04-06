@@ -46,7 +46,7 @@ package inf.utils {
 		 */
 		public function getAllInArray():Array {
 			var ret:Array = [];
-			for (var item:Object in this._elements) {
+			for each (var item:Object in this._elements) {
 				ret.push(item);
 			}
 			return ret;

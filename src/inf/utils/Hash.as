@@ -65,6 +65,15 @@ package inf.utils {
 		}
 		
 		/**
+		 * Removes element from hash by key
+		 */
+		public function remove(key:Object):void {
+			if (this._elements.hasOwnProperty(key)) {
+				delete this._elements[key];
+			}
+		}
+		
+		/**
 		 * Resets hash
 		 */
 		public function reset():void {

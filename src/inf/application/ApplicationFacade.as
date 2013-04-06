@@ -30,7 +30,14 @@ package inf.application {
 		 * @var String
 		 */
 		public static const APP_HANDSHAKE_DATA_LOADED:String = "onHandshakeDataLoaded";
-				
+		
+		/**
+		 * Notification after image source loaded from server
+		 * @var String
+		 */
+		public static const IMAGE_ITEM_BITMAP_LOADED:String = "onImageItemBitmapLoaded";
+		
+		
 		/**
 		 * Application
 		 * @var Sprite

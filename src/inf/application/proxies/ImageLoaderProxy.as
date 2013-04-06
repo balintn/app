@@ -1,13 +1,15 @@
 package inf.application.proxies {
+	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
 	
-	import org.puremvc.as3.patterns.proxy.Proxy;
-	
+	import inf.application.ApplicationFacade;
 	import inf.utils.Hash;
 	import inf.utils.Logger;
+	
+	import org.puremvc.as3.patterns.proxy.Proxy;
 	
 	/**
 	 * ImageLoaderProxy class
@@ -41,9 +43,10 @@ package inf.application.proxies {
 		
 		protected function onComplete(event:Event):void {
 			
-			var additionalInfo:Object = this._queue.get(event.currentTarget as Loader, null);
+			var loader:Loader = event.currentTarget.loader as Loader;
+			var additionalInfo:Object = this._queue.get(loader, null);
 			
-			// TODO send notification
+			this.sendNotification(ApplicationFacade.IMAGE_ITEM_BITMAP_LOADED, {displayObject: loader.content, additionalInfo: additionalInfo});
 			
 		}
 		

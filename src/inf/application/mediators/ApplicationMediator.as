@@ -84,15 +84,15 @@ package inf.application.mediators {
 					itemsView.y = itemsModel.y;
 					itemsView.addEventListener(Event.ADDED_TO_STAGE, this.itemsViewAddedToStage);
 					
-					this.app.addChild(editorView);
-					this.app.addChild(itemsView);
-					
 					// create mediators
 					Logger.debug("Register EditorMediator...");
 					this.facade.registerMediator(new EditorMediator(editorView));
 					
 					Logger.debug("Register ItemsMediator...");
 					this.facade.registerMediator(new ItemsMediator(itemsView));
+					
+					this.app.addChild(editorView);
+					this.app.addChild(itemsView);
 					
 					break;
 				

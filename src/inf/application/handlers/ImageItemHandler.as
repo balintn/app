@@ -1,5 +1,7 @@
 package inf.application.handlers {
 	
+	import flash.utils.Dictionary;
+	
 	import inf.application.ApplicationFacade;
 	import inf.application.models.ImageItemModel;
 	import inf.application.proxies.ImageLoaderProxy;
@@ -87,7 +89,8 @@ package inf.application.handlers {
 		 */
 		public static function getItemById(id:uint):ImageItemModel {
 			ImageItemHandler._init();
-			for (var key:Object in ImageItemHandler._items) {
+			var elements:Dictionary = ImageItemHandler._items.getAll();
+			for (var key:Object in elements) {
 				if (key.id == id) {
 					return key as ImageItemModel;
 				}

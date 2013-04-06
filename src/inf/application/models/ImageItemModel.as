@@ -1,4 +1,5 @@
 package inf.application.models {
+	import flash.display.DisplayObject;
 	
 	/**
 	 * ImageItemModel class
@@ -13,7 +14,9 @@ package inf.application.models {
 		
 		private var _filePath:String;
 		
-		private var _marked:Boolean; 
+		private var _marked:Boolean;
+		
+		private var _image:DisplayObject;
 		
 		
 		public function ImageItemModel() {
@@ -36,6 +39,10 @@ package inf.application.models {
 			this._marked = value as Boolean;
 		}
 		
+		public function setImage(image:DisplayObject):void {
+			this._image = image;
+		}
+		
 		public function get id():uint {
 			return this._id;
 		}
@@ -50,6 +57,10 @@ package inf.application.models {
 		
 		public function get marked():Boolean {
 			return this._marked;
+		}
+		
+		public function get image():DisplayObject {
+			return this._image;
 		}
 		
 	}

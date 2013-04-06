@@ -1,4 +1,5 @@
 package inf.utils {
+	import flash.utils.Dictionary;
 	
 	/**
 	 * Hash class
@@ -9,14 +10,14 @@ package inf.utils {
 		/**
 		 * @var Object elements
 		 */
-		private var _elements:Object;
+		private var _elements:Dictionary;
 		
 		
 		/**
 		 * Constructor
 		 */
 		public function Hash() {
-			this._elements = {};
+			this._elements = new Dictionary();
 		}
 		
 		
@@ -77,7 +78,7 @@ package inf.utils {
 		 * Resets hash
 		 */
 		public function reset():void {
-			this._elements = {};
+			this._elements = new Dictionary();
 		}
 		
 	}

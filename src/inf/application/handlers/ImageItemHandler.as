@@ -1,5 +1,6 @@
 package inf.application.handlers {
 	import inf.application.models.ImageItemModel;
+	import inf.utils.Hash;
 	import inf.utils.Logger;
 	
 	/**
@@ -10,7 +11,7 @@ package inf.application.handlers {
 	public class ImageItemHandler {
 		
 		
-		private static var _items:Array;
+		private static var _items:Hash;
 		
 		private static var _initialized:Boolean = false;
 		
@@ -24,7 +25,7 @@ package inf.application.handlers {
 				return;
 			}
 			
-			ImageItemHandler._items = [];
+			ImageItemHandler._items = new Hash();
 			
 			ImageItemHandler._initialized = true;
 			
@@ -58,14 +59,14 @@ package inf.application.handlers {
 			ImageItemHandler._init();
 			var tmp:ImageItemModel = new ImageItemModel();
 			tmp.populateData(source);
-			ImageItemHandler._items.push(tmp);
+			ImageItemHandler.set(tmp, false);
 		}
 		
 		/**
 		 * Returns item list
-		 * @return Array
+		 * @return Hash
 		 */
-		public static function getItems():Array {
+		public static function getItems():Hash {
 			ImageItemHandler._init();
 			return ImageItemHandler._items;
 		}
@@ -76,9 +77,9 @@ package inf.application.handlers {
 		 */
 		public static function getItemById(id:uint):ImageItemModel {
 			ImageItemHandler._init();
-			for (var i:uint = 0; i < ImageItemHandler._items.length; i++) {
-				if ((ImageItemHandler._items[i] as ImageItemModel).id == id) {
-					return ImageItemHandler._items[i] as ImageItemModel;
+			for (var key:Object in ImageItemHandler._items) {
+				if (key.id == id) {
+					return key;
 				}
 			}
 			return null;

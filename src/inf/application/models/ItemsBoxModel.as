@@ -14,8 +14,6 @@ package inf.application.models {
 		
 		private var _itemWidth:int;
 		
-		private var _itemHeight:int;
-		
 		private var _spaceBetweenItems:int;
 		
 		
@@ -40,10 +38,6 @@ package inf.application.models {
 			this._itemWidth = value;
 		}
 		
-		internal function setItemHeight(value:int):void {
-			this._itemHeight = value;
-		}
-		
 		internal function setSpaceBetweenItems(value:int):void {
 			this._spaceBetweenItems = value;
 		}
@@ -58,10 +52,6 @@ package inf.application.models {
 		
 		public function get itemWidth():int {
 			return this._itemWidth;
-		}
-		
-		public function get itemHeight():int {
-			return this._itemHeight;
 		}
 		
 		public function get spaceBetweenItems():int {

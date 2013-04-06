@@ -7,7 +7,6 @@ package inf.application.models {
 		
 		private var _width:Number;
 		private var _height:Number;
-		private var _align:String;
 		private var _x:Number;
 		private var _y:Number;
 		private var _backgroundColor:uint;
@@ -26,10 +25,6 @@ package inf.application.models {
 		
 		internal function setHeight(value:Number):void {
 			this._height = value;
-		}
-		
-		internal function setAlign(value:String):void {
-			this._align = value;
 		}
 		
 		internal function setX(value:Number):void {
@@ -66,10 +61,6 @@ package inf.application.models {
 		
 		public function get height():Number {
 			return this._height;
-		}
-		
-		public function get align():String {
-			return this._align;
 		}
 		
 		public function get x():Number {

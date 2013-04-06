@@ -1,4 +1,4 @@
-package inf.application.views.widgets {
+package inf.application.views.components {
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	

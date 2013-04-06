@@ -14,7 +14,7 @@ package inf.application.mediators {
 	import inf.application.proxies.ImageLoaderProxy;
 	import inf.application.views.EditorView;
 	import inf.application.views.ItemsView;
-	import inf.application.views.widgets.BackgroundedSprite;
+	import inf.application.views.components.BackgroundedSprite;
 	import inf.utils.Logger;
 	
 	import org.puremvc.as3.interfaces.INotification;

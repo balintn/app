@@ -1,6 +1,6 @@
 package inf.application.views {
 	import inf.application.models.EditorBoxModel;
-	import inf.application.views.widgets.BoxComponent;
+	import inf.application.views.components.BoxComponent;
 	
 	/**
 	 * EditorView class

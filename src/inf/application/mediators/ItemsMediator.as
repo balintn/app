@@ -44,7 +44,7 @@ package inf.application.mediators {
 					model.setImage(image);
 				} else {
 					Logger.error("Image item by id=" + id + " not found! Failed to store downloaded image!");
-				}
+				}				
 			}
 		}
 		

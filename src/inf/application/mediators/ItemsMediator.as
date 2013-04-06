@@ -1,5 +1,7 @@
 package inf.application.mediators {
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.utils.Dictionary;
 	
 	import inf.application.ApplicationFacade;
@@ -33,7 +35,13 @@ package inf.application.mediators {
 		 * ImageItemComponent instance list where key is the model id value is the view component instance
 		 * @var Object
 		 */
-		private var _itemViews:Object;
+		private var _itemViewsById:Object;
+		
+		/**
+		 * ImageItemComponent instance list. Ordered by instance creation time
+		 * @var Array
+		 */
+		private var _itemViewsOrdered:Array;
 		
 		private var _availableImageWidth:Number = NaN;
 		
@@ -41,27 +49,40 @@ package inf.application.mediators {
 		public function ItemsMediator(viewComponent:ItemsView) {
 			super(ItemsMediator.NAME, viewComponent);
 			
-			this._itemViews = {};
+			this._itemViewsById = {};
+			this._itemViewsOrdered = [];
 			
 			// let's create the views and position them
 			this._itemsContainer = new BaseComponent(this.imageWidth);
 			var offset:int = 0;
-						
+			var imageWidth:int = ItemsBoxModel.getInstance().itemWidth;
 			var itemModels:Dictionary = ImageItemHandler.getItems().getAll();
 			for (var key:Object in itemModels) {
 				
-				var tmp = new ImageItemComponent(this.imageWidth, this.imageHeight);
-				tmp.y = offset;
+				var tmp:ImageItemComponent = new ImageItemComponent();
+				
 				this._itemsContainer.addChild(tmp);
 				
 				// cache it
-				this._itemViews[key.id] = tmp;
-				
-				offset += this.imageHeight + this.spaceBetweenItems;
+				this._itemViewsById[key.id] = tmp;
+				this._itemViewsOrdered.push(tmp);
 			}
 			
 			// TODO test.... torolni majd
-			//this.view.addChild(this._itemsContainer);
+			this.view.addChild(this._itemsContainer);
+		}
+		
+		private function recalculateItemsPosition():void {
+			var offset:Number = 0;
+			for (var i:uint = 0; i < this._itemViewsOrdered.length; i++) {
+				
+				this._itemViewsOrdered[i].y = offset;
+				
+				var itemComp:ImageItemComponent = this._itemViewsOrdered[i] as ImageItemComponent;
+				
+				offset += (itemComp.image != null) ? itemComp.image.height + this.spaceBetweenItems : 0;
+				
+			}
 		}
 		
 		
@@ -89,11 +110,22 @@ package inf.application.mediators {
 				}
 				
 				// attach to its viewcomponent
-				var viewComp:ImageItemComponent = this._itemViews.hasOwnProperty(model.id) ? this._itemViews[model.id] : null;
+				var viewComp:ImageItemComponent = this._itemViewsById.hasOwnProperty(model.id) ? this._itemViewsById[model.id] : null;
 				if (viewComp != null) {
+					var targetWidth:Number = ItemsBoxModel.getInstance().itemWidth;
+					// set image dimensions
+					var multiplier:Number = (image.width < targetWidth) ? image.width / targetWidth : targetWidth / image.width;
+					image.width *= multiplier;
+					image.height *= multiplier;
+					image.addEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage);
 					viewComp.addImage(image);
 				}
 			}
+		}
+		
+		private function onImageAddedToStage(event:Event):void {
+			this.recalculateItemsPosition();
+			(event.currentTarget as Bitmap).removeEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage);
 		}
 		
 		private function getAvailableImageWidth():Number {
@@ -107,10 +139,6 @@ package inf.application.mediators {
 		
 		public function get imageWidth():int {
 			return ItemsBoxModel.getInstance().itemWidth;
-		}
-		
-		public function get imageHeight():int {
-			return ItemsBoxModel.getInstance().itemHeight;
 		}
 		
 		public function get spaceBetweenItems():int {

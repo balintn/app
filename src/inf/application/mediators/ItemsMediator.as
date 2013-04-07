@@ -76,8 +76,24 @@ package inf.application.mediators {
 			}
 			
 			// register scroll mediator
-			var scrollComp:ScrollComponent = new ScrollComponent(boxModel.width, boxModel.height);
+			var scrollCompWidth:Number = boxModel.itemWidth + boxModel.spaceBetweenScrollAndList + boxModel.scrollWidth;
+			var scrollComp:ScrollComponent = new ScrollComponent(scrollCompWidth, boxModel.height);
 			scrollComp.addEventListener(Event.ADDED_TO_STAGE, this.onScrollComponenentAddedToStage);
+			
+			scrollComp.scrollBarWidth = boxModel.scrollWidth;
+			scrollComp.scrollBarBackgroundAlpha = boxModel.scrollBackgroundAlpha;
+			scrollComp.scrollBarBackgroundColor = boxModel.scrollBackgroundColor;
+			scrollComp.scrollBarBorderAlpha = boxModel.scrollBorderAlpha;
+			scrollComp.scrollBarBorderColor = boxModel.scrollBorderColor;
+			scrollComp.scrollBarBorderSize = boxModel.scrollBorderSize;
+			
+			scrollComp.scrollBarMarginTop = boxModel.scrollLimitTop;
+			scrollComp.scrollBarMarginBottom = boxModel.scrollLimitBottom;
+				
+			scrollComp.scrollThumbWidth = boxModel.scrollThumbWidth;
+			scrollComp.scrollThumbHeight = boxModel.scrollThumbHeight;
+			scrollComp.scrollThumbColor = boxModel.scrollThumbColor;
+			
 			this._scrollMediator = new ScrollMediator(scrollComp, ItemsMediator.NAME);
 			this.facade.registerMediator(this._scrollMediator);
 			this.view.addChild(scrollComp);			
@@ -97,7 +113,7 @@ package inf.application.mediators {
 				
 				offset += (itemComp.image != null) ? itemComp.image.height + this.spaceBetweenItems : 0;
 			}
-			this._itemsContainer.height = offset;
+			this._itemsContainer.height = offset - this.spaceBetweenItems;
 			this._scrollMediator.forceRender();
 		}
 		

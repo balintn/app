@@ -11,6 +11,7 @@ package inf.application.mediators {
 	import inf.application.views.ItemsView;
 	import inf.application.views.components.BaseComponent;
 	import inf.application.views.components.ImageItemComponent;
+	import inf.application.views.components.ScrollComponent;
 	import inf.utils.Hash;
 	import inf.utils.Logger;
 	
@@ -24,6 +25,9 @@ package inf.application.mediators {
 	public class ItemsMediator extends Mediator {
 		
 		public static const NAME:String = "itemsMediator";
+		
+		private var _scrollMediator:ScrollMediator;
+		
 		
 		/**
 		 * DisplayObject container which gives plase to ImageItemComponent instances
@@ -55,7 +59,10 @@ package inf.application.mediators {
 			// let's create the views and position them
 			this._itemsContainer = new BaseComponent(this.imageWidth);
 			var offset:int = 0;
-			var imageWidth:int = ItemsBoxModel.getInstance().itemWidth;
+			
+			var boxModel:ItemsBoxModel = ItemsBoxModel.getInstance();
+			
+			var imageWidth:int = boxModel.itemWidth;
 			var itemModels:Dictionary = ImageItemHandler.getItems().getAll();
 			for (var key:Object in itemModels) {
 				
@@ -68,8 +75,13 @@ package inf.application.mediators {
 				this._itemViewsOrdered.push(tmp);
 			}
 			
-			// TODO test.... torolni majd
-			this.view.addChild(this._itemsContainer);
+			// register scroll mediator
+			var scrollComp:ScrollComponent = new ScrollComponent(boxModel.width, boxModel.height);
+			scrollComp.addEventListener(Event.ADDED_TO_STAGE, this.onScrollComponenentAddedToStage);
+			this._scrollMediator = new ScrollMediator(scrollComp, ItemsMediator.NAME);
+			this.facade.registerMediator(this._scrollMediator);
+			this.view.addChild(scrollComp);			
+			
 		}
 		
 		/**
@@ -85,6 +97,8 @@ package inf.application.mediators {
 				
 				offset += (itemComp.image != null) ? itemComp.image.height + this.spaceBetweenItems : 0;
 			}
+			this._itemsContainer.height = offset;
+			this._scrollMediator.forceRender();
 		}
 		
 		
@@ -125,6 +139,11 @@ package inf.application.mediators {
 					viewComp.addImage(image);
 				}
 			}
+		}
+		
+		private function onScrollComponenentAddedToStage(event:Event):void {
+			this._scrollMediator.getView().removeEventListener(Event.ADDED_TO_STAGE, this.onScrollComponenentAddedToStage);			
+			this._scrollMediator.setScrollContent(this._itemsContainer);
 		}
 		
 		private function onImageAddedToStage(event:Event):void {

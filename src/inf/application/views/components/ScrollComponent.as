@@ -17,7 +17,12 @@ package inf.application.views.components {
 		protected var _scrollBarMarginTop:Number = 0;
 		protected var _scrollBarMarginBottom:Number = 0;
 		
-		protected var _scrollBarColor:uint = 0;
+		protected var _scrollBarBackgroundColor:uint = 0;
+		protected var _scrollBarBackgroundAlpha:Number = 1;
+		protected var _scrollBarBorderColor:uint = 0;
+		protected var _scrollBarBorderAlpha:Number = 1;
+		protected var _scrollBarBorderSize:uint = 1;
+		
 		protected var _scrollThumbColor:uint = 0xff0000;
 		
 		protected var _content:DisplayObject;
@@ -48,6 +53,7 @@ package inf.application.views.components {
 			
 			this._mask = new Shape();
 			this._scrollThumb = new BackgroundedComponent();
+			this._scrollThumb.borderSize = 0;
 			this._scrollBar = new BackgroundedComponent();
 			
 			this.addChild(this._mask);
@@ -79,7 +85,11 @@ package inf.application.views.components {
 						this._scrollBar.y = 0;
 						this._scrollBar.width = this._scrollBarWidth;
 						this._scrollBar.height = this.height;
-						this._scrollBar.backgroundColor = this._scrollBarColor;
+						this._scrollBar.backgroundColor = this._scrollBarBackgroundColor;
+						this._scrollBar.backgroundAlpha = this._scrollBarBackgroundAlpha;
+						this._scrollBar.borderColor = this._scrollBarBorderColor;
+						this._scrollBar.borderAlpha = this._scrollBarBorderAlpha;
+						this._scrollBar.borderSize = this._scrollBarBorderSize;
 						
 						this._scrollThumb.align = BackgroundedComponent.CENTER_TOP;
 						this._scrollThumb.x = this._scrollBar.x;
@@ -220,12 +230,21 @@ package inf.application.views.components {
 			this.render();
 		}
 		
-		public function get scrollBarColor():uint {
-			return this._scrollBarColor;
+		public function get scrollBarBackgroundColor():uint {
+			return this._scrollBarBackgroundColor;
 		}
 		
-		public function set scrollBarColor(value:uint):void {
-			this._scrollBarColor = value;
+		public function set scrollBarBackgroundColor(value:uint):void {
+			this._scrollBarBackgroundColor = value;
+			this.render();
+		}
+		
+		public function get scrollBarBackgroundAlpha():Number {
+			return this._scrollBarBackgroundAlpha;
+		}
+		
+		public function set scrollBarBackgroundAlpha(value:Number):void {
+			this._scrollBarBackgroundAlpha = value;
 			this.render();
 		}
 		
@@ -262,6 +281,33 @@ package inf.application.views.components {
 		
 		public function set scrollAreaBackgroundAlpha(value:Number):void {
 			this._scrollAreaBackgroundAlpha = value;
+			this.render();
+		}
+		
+		public function get scrollBarBorderColor():uint {
+			return this._scrollAreaBackgroundColor;
+		}
+		
+		public function set scrollBarBorderColor(value:uint):void {
+			this._scrollBarBorderColor = value;
+			this.render();
+		}
+		
+		public function get scrollBarBorderAlpha():Number {
+			return this._scrollBarBorderAlpha;
+		}
+		
+		public function set scrollBarBorderAlpha(value:Number):void {
+			this._scrollBarBorderAlpha = value;
+			this.render();
+		}
+		
+		public function get scrollBarBorderSize():uint {
+			return this._scrollBarBorderSize;
+		}
+		
+		public function set scrollBarBorderSize(value:uint):void {
+			this._scrollBarBorderSize = value;
 			this.render();
 		}
 		

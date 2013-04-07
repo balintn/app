@@ -51,7 +51,7 @@ package inf.application.views.components {
 			this._background.graphics.clear();
 			
 			this._background.graphics.beginFill(this._backgroundColor, this._backgroundAlpha);
-			this._background.graphics.lineStyle(this._borderSize, this._borderColor, this._borderAlpha);
+			this._background.graphics.lineStyle(this._borderSize, this._borderColor, (this._borderSize == 0) ? 0 :this._borderAlpha);
 			
 			switch (this._align) {
 				

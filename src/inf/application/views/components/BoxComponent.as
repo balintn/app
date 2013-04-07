@@ -5,10 +5,10 @@ package inf.application.views.components {
 	 * BoxComponent class
 	 * @author inf
 	 */
-	public class BoxComponent extends BackgroundedSprite {
+	public class BoxComponent extends BackgroundedComponent {
 		
 		public function BoxComponent(model:BoxModel) {
-			super(model.width, model.height, BackgroundedSprite.LEFT_TOP, model.backgroundColor, model.backgroundAlpha, model.borderSize, model.borderColor, model.borderAlpha);
+			super(model.width, model.height, BackgroundedComponent.LEFT_TOP, model.backgroundColor, model.backgroundAlpha, model.borderSize, model.borderColor, model.borderAlpha);
 		}
 		
 		public override function render():void {

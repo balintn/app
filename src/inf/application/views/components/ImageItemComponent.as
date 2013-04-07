@@ -5,11 +5,11 @@ package inf.application.views.components {
 	 * ImageItemComponent class
 	 * @author inf
 	 */
-	public class ImageItemComponent extends BackgroundedSprite {
+	public class ImageItemComponent extends BackgroundedComponent {
 		
 		private var _image:DisplayObject;
 		
-		public function ImageItemComponent(width = 0, height = 0, image:DisplayObject = null, align:String=BackgroundedSprite.LEFT_TOP, bgColor:uint=0xffffff, bgAlpha:Number=0, borderSize:Number=0, borderColor:uint=0, borderAlpha:Number=0) {
+		public function ImageItemComponent(width = 0, height = 0, image:DisplayObject = null, align:String=BackgroundedComponent.LEFT_TOP, bgColor:uint=0xffffff, bgAlpha:Number=0, borderSize:Number=0, borderColor:uint=0, borderAlpha:Number=0) {
 			super(width, height, align, bgColor, bgAlpha, borderSize, borderColor, borderAlpha);
 			
 			if (image != null) {

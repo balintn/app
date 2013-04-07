@@ -72,6 +72,9 @@ package inf.application.mediators {
 			this.view.addChild(this._itemsContainer);
 		}
 		
+		/**
+		 * Recalculates the list elements y coords
+		 */
 		private function recalculateItemsPosition():void {
 			var offset:Number = 0;
 			for (var i:uint = 0; i < this._itemViewsOrdered.length; i++) {
@@ -81,7 +84,6 @@ package inf.application.mediators {
 				var itemComp:ImageItemComponent = this._itemViewsOrdered[i] as ImageItemComponent;
 				
 				offset += (itemComp.image != null) ? itemComp.image.height + this.spaceBetweenItems : 0;
-				
 			}
 		}
 		
@@ -112,7 +114,9 @@ package inf.application.mediators {
 				// attach to its viewcomponent
 				var viewComp:ImageItemComponent = this._itemViewsById.hasOwnProperty(model.id) ? this._itemViewsById[model.id] : null;
 				if (viewComp != null) {
+					
 					var targetWidth:Number = ItemsBoxModel.getInstance().itemWidth;
+										
 					// set image dimensions
 					var multiplier:Number = (image.width < targetWidth) ? image.width / targetWidth : targetWidth / image.width;
 					image.width *= multiplier;

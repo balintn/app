@@ -3,10 +3,10 @@ package inf.application.views.components {
 	import flash.display.Sprite;
 	
 	/**
-	 * BackgroundedSprite class
+	 * BackgroundedComponent class
 	 * @author inf
 	 */
-	public class BackgroundedSprite extends BaseComponent {
+	public class BackgroundedComponent extends BaseComponent {
 		
 		public static const LEFT_TOP:String = "top-left";
 		public static const LEFT_MIDDLE:String = "middle-left";
@@ -31,7 +31,7 @@ package inf.application.views.components {
 		private var _background:Shape;
 		
 		
-		public function BackgroundedSprite(width:Number = 0, height:Number = 0, align:String = BackgroundedSprite.LEFT_TOP, bgColor:uint = 0xffffff, bgAlpha:Number = 1, borderSize:Number = 1, borderColor:uint = 0, borderAlpha:Number = 1) {
+		public function BackgroundedComponent(width:Number = 0, height:Number = 0, align:String = BackgroundedComponent.LEFT_TOP, bgColor:uint = 0xffffff, bgAlpha:Number = 1, borderSize:Number = 1, borderColor:uint = 0, borderAlpha:Number = 1) {
 			super(width, height);
 			
 			this._backgroundColor = bgColor;
@@ -55,39 +55,39 @@ package inf.application.views.components {
 			
 			switch (this._align) {
 				
-				case BackgroundedSprite.LEFT_TOP:
+				case BackgroundedComponent.LEFT_TOP:
 					this._background.graphics.drawRect(0, 0, this.width, this.height);
 					break;
 				
-				case BackgroundedSprite.LEFT_MIDDLE:
+				case BackgroundedComponent.LEFT_MIDDLE:
 					this._background.graphics.drawRect(0, -this.height / 2, this.width, this.height);
 					break;
 				
-				case BackgroundedSprite.LEFT_BOTTOM:
+				case BackgroundedComponent.LEFT_BOTTOM:
 					this._background.graphics.drawRect(0, -this.height, this.width, this.height);
 					break;
 				
-				case BackgroundedSprite.CENTER_TOP:
+				case BackgroundedComponent.CENTER_TOP:
 					this._background.graphics.drawRect(-this.width / 2, 0, this.width, this.height);
 					break;
 				
-				case BackgroundedSprite.CENTER_MIDDLE:
+				case BackgroundedComponent.CENTER_MIDDLE:
 					this._background.graphics.drawRect(-this.width / 2, -this.height / 2, this.width, this.height);
 					break;
 				
-				case BackgroundedSprite.CENTER_BOTTOM:
+				case BackgroundedComponent.CENTER_BOTTOM:
 					this._background.graphics.drawRect(-this.width / 2, -this.height, this.width, this.height);
 					break;
 				
-				case BackgroundedSprite.RIGHT_TOP:
+				case BackgroundedComponent.RIGHT_TOP:
 					this._background.graphics.drawRect(-this.width, 0, this.width, this.height);
 					break;
 				
-				case BackgroundedSprite.RIGHT_MIDDLE:
+				case BackgroundedComponent.RIGHT_MIDDLE:
 					this._background.graphics.drawRect(-this.width, -this.height / 2, this.width, this.height);	
 					break;
 				
-				case BackgroundedSprite.RIGHT_BOTTOM:
+				case BackgroundedComponent.RIGHT_BOTTOM:
 					this._background.graphics.drawRect(-this.width, -this.height, this.width, this.height);
 					break;					
 			}
@@ -106,20 +106,20 @@ package inf.application.views.components {
 		public function set align(v:String):void {
 			
 			switch (v) {
-				case BackgroundedSprite.LEFT_TOP:
-				case BackgroundedSprite.LEFT_MIDDLE:
-				case BackgroundedSprite.LEFT_BOTTOM:
-				case BackgroundedSprite.CENTER_TOP:
-				case BackgroundedSprite.CENTER_MIDDLE:
-				case BackgroundedSprite.CENTER_BOTTOM:
-				case BackgroundedSprite.RIGHT_TOP:
-				case BackgroundedSprite.RIGHT_MIDDLE:
-				case BackgroundedSprite.RIGHT_BOTTOM:
+				case BackgroundedComponent.LEFT_TOP:
+				case BackgroundedComponent.LEFT_MIDDLE:
+				case BackgroundedComponent.LEFT_BOTTOM:
+				case BackgroundedComponent.CENTER_TOP:
+				case BackgroundedComponent.CENTER_MIDDLE:
+				case BackgroundedComponent.CENTER_BOTTOM:
+				case BackgroundedComponent.RIGHT_TOP:
+				case BackgroundedComponent.RIGHT_MIDDLE:
+				case BackgroundedComponent.RIGHT_BOTTOM:
 					this._align = v;
 					break;
 				
 				default:
-					this._align = BackgroundedSprite.LEFT_TOP;
+					this._align = BackgroundedComponent.LEFT_TOP;
 					break;
 			}
 		}

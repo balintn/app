@@ -28,13 +28,6 @@ package inf.application.mediators {
 		
 		private var _scrollMediator:ScrollMediator;
 		
-		
-		/**
-		 * DisplayObject container which gives plase to ImageItemComponent instances
-		 * @var BaseComponent
-		 */
-		//private var _itemsContainer:BaseComponent;
-		
 		/**
 		 * ImageItemComponent instance list where key is the model id value is the view component instance
 		 * @var Object
@@ -96,6 +89,7 @@ package inf.application.mediators {
 			scrollComp.scrollThumbColor = boxModel.scrollThumbColor;
 			
 			this._scrollMediator = new ScrollMediator(scrollComp, ItemsMediator.NAME);
+			this._scrollMediator.animatedScroll = true;
 			this.facade.registerMediator(this._scrollMediator);
 			this.view.addChild(scrollComp);			
 			
@@ -133,6 +127,7 @@ package inf.application.mediators {
 				
 				var id:uint = body['additionalInfo'];
 				var image:DisplayObject = body['displayObject'] as DisplayObject;
+				image.cacheAsBitmap = true;
 				
 				var model:ImageItemModel = ImageItemHandler.getItemById(id);
 				

@@ -33,7 +33,7 @@ package inf.application.mediators {
 		 * DisplayObject container which gives plase to ImageItemComponent instances
 		 * @var BaseComponent
 		 */
-		private var _itemsContainer:BaseComponent;
+		//private var _itemsContainer:BaseComponent;
 		
 		/**
 		 * ImageItemComponent instance list where key is the model id value is the view component instance
@@ -57,7 +57,7 @@ package inf.application.mediators {
 			this._itemViewsOrdered = [];
 			
 			// let's create the views and position them
-			this._itemsContainer = new BaseComponent(this.imageWidth);
+			this.view.createItemsContainer(this.imageWidth);
 			var offset:int = 0;
 			
 			var boxModel:ItemsBoxModel = ItemsBoxModel.getInstance();
@@ -68,7 +68,7 @@ package inf.application.mediators {
 				
 				var tmp:ImageItemComponent = new ImageItemComponent();
 				
-				this._itemsContainer.addChild(tmp);
+				this.view.itemsContainer.addChild(tmp);
 				
 				// cache it
 				this._itemViewsById[key.id] = tmp;
@@ -113,7 +113,7 @@ package inf.application.mediators {
 				
 				offset += (itemComp.image != null) ? itemComp.image.height + this.spaceBetweenItems : 0;
 			}
-			this._itemsContainer.height = offset - this.spaceBetweenItems;
+			this.view.itemsContainer.height = offset - this.spaceBetweenItems;
 			this._scrollMediator.forceRender();
 		}
 		
@@ -159,7 +159,7 @@ package inf.application.mediators {
 		
 		private function onScrollComponenentAddedToStage(event:Event):void {
 			this._scrollMediator.getView().removeEventListener(Event.ADDED_TO_STAGE, this.onScrollComponenentAddedToStage);			
-			this._scrollMediator.setScrollContent(this._itemsContainer);
+			this._scrollMediator.setScrollContent(this.view.itemsContainer);
 		}
 		
 		private function onImageAddedToStage(event:Event):void {

@@ -97,7 +97,7 @@ package inf.application.mediators {
 			var view:ScrollComponent = this.getView();
 			var _stage:Stage = DisplayObject(view.stage) as Stage;
 			// check if mouse left the stage
-			if (_stage.mouseX < 0 || _stage.mouseX > _stage.stageWidth || _stage.mouseY < 0 || _stage.mouseY > _stage.stageHeight) {
+			if (_stage.mouseX <= 0 || _stage.mouseX >= _stage.stageWidth || _stage.mouseY <= 0 || _stage.mouseY >= _stage.stageHeight) {
 				this.onThumbMouseUp(new MouseEvent("fakeEvent"));
 			}
 			

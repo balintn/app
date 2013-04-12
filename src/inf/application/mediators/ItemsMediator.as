@@ -77,7 +77,8 @@ package inf.application.mediators {
 			
 			// register scroll mediator
 			var scrollCompWidth:Number = boxModel.itemWidth + boxModel.spaceBetweenScrollAndList + boxModel.scrollWidth;
-			var scrollComp:ScrollComponent = new ScrollComponent(scrollCompWidth, boxModel.height);
+			
+			var scrollComp:ScrollComponent = this.view.createScrollComponent(scrollCompWidth, boxModel.height);
 			scrollComp.addEventListener(Event.ADDED_TO_STAGE, this.onScrollComponenentAddedToStage);
 			
 			scrollComp.scrollBarWidth = boxModel.scrollWidth;

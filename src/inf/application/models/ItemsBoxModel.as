@@ -78,7 +78,7 @@ package inf.application.models {
 			this._scrollThumbHeight = value;
 		}
 		
-		internal function setScrollThumbColor(value:Number):void {
+		internal function setScrollThumbColor(value:uint):void {
 			this._scrollThumbColor = value;
 		}
 		

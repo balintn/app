@@ -35,8 +35,8 @@ package inf.application.models {
 			this._y = value;
 		}
 		
-		internal function setBackgroundColor(value:String):void {
-			this._backgroundColor = parseInt(value, 16);
+		internal function setBackgroundColor(value:uint):void {
+			this._backgroundColor = value;
 		}
 		
 		internal function setBackgroundAlpha(value:Number):void {
@@ -47,8 +47,8 @@ package inf.application.models {
 			this._borderSize = value;
 		}
 		
-		internal function setBorderColor(value:String):void {
-			this._borderColor = parseInt(value, 16);
+		internal function setBorderColor(value:uint):void {
+			this._borderColor = value;
 		}
 		
 		internal function setBorderAlpha(value:Number):void {

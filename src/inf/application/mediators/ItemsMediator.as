@@ -98,6 +98,12 @@ package inf.application.mediators {
 			
 			var scrollComp:ScrollComponent = this.view.createScrollComponent(scrollCompWidth, boxModel.height - this._scrollPaddingTop - this._scrollPaddingBottom);
 			scrollComp.addEventListener(Event.ADDED_TO_STAGE, this.onScrollComponenentAddedToStage);
+
+			scrollComp.scrollPaneBorderAlpha = boxModel.scrollPaneBorderAlpha;
+			scrollComp.scrollPaneBorderSize = boxModel.scrollPaneBorderSize;
+			scrollComp.scrollPaneBorderColor = boxModel.scrollPaneBorderColor;
+			scrollComp.scrollPaneBackgroundColor = boxModel.scrollPaneBackgroundColor;
+			scrollComp.scrollPaneBackgroundAlpha = boxModel.scrollPaneBackgroundAlpha;
 			
 			scrollComp.scrollBarWidth = boxModel.scrollWidth;
 			scrollComp.scrollBarBackgroundAlpha = boxModel.scrollBackgroundAlpha;
@@ -108,7 +114,7 @@ package inf.application.mediators {
 			
 			scrollComp.scrollBarMarginTop = boxModel.scrollLimitTop;
 			scrollComp.scrollBarMarginBottom = boxModel.scrollLimitBottom;
-				
+			
 			scrollComp.scrollThumbWidth = boxModel.scrollThumbWidth;
 			scrollComp.scrollThumbHeight = boxModel.scrollThumbHeight;
 			scrollComp.scrollThumbColor = boxModel.scrollThumbColor;

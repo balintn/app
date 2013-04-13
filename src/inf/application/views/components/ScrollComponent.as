@@ -30,9 +30,16 @@ package inf.application.views.components {
 		
 		protected var _scrollThumb:BackgroundedComponent;
 		protected var _scrollBar:BackgroundedComponent;
+		protected var _scrollPaneBackground:BackgroundedComponent;
 		
 		protected var _scrollAreaBackgroundColor:uint = 0xffffff;
 		protected var _scrollAreaBackgroundAlpha:Number = 0;
+		
+		protected var _scrollPaneBorderColor:uint = 0x0;
+		protected var _scrollPaneBorderSize:Number = 0;
+		protected var _scrollPaneBorderAlpha:Number = 0;
+		protected var _scrollPaneBackgroundColor:uint = 0x0;
+		protected var _scrollPaneBackgroundAlpha:Number = 0;
 		
 		protected var _isEnabled:Boolean;
 		
@@ -55,7 +62,9 @@ package inf.application.views.components {
 			this._scrollThumb = new BackgroundedComponent();
 			this._scrollThumb.borderSize = 0;
 			this._scrollBar = new BackgroundedComponent();
+			this._scrollPaneBackground = new BackgroundedComponent(this.width, this.height, BackgroundedComponent.LEFT_TOP, 0xffffff, 0, this._scrollPaneBorderSize, this._scrollPaneBorderColor, this._scrollPaneBorderAlpha);
 			
+			this.addChild(this._scrollPaneBackground);
 			this.addChild(this._mask);
 			this.addChild(this._scrollThumb);
 			this.addChild(this._scrollBar);
@@ -143,8 +152,20 @@ package inf.application.views.components {
 			this.setChildIndex(this._scrollBar, this.numChildren - 1);
 			this.setChildIndex(this._scrollThumb, this.numChildren - 1);
 			
+			this._scrollPaneBackground.borderAlpha = this._scrollPaneBorderAlpha;
+			this._scrollPaneBackground.borderColor = this._scrollPaneBorderColor;
+			this._scrollPaneBackground.borderSize = this._scrollPaneBorderSize;
+			this._scrollPaneBackground.backgroundColor = this._scrollPaneBackgroundColor;
+			this._scrollPaneBackground.backgroundAlpha = this._scrollPaneBackgroundAlpha;
+			
+			this._scrollPaneBackground.x = - this._scrollPaneBorderSize;
+			this._scrollPaneBackground.width = this.width + 1 * this._scrollPaneBorderSize;
+			this._scrollPaneBackground.y = - this._scrollPaneBorderSize;
+			this._scrollPaneBackground.height = this.height + 1 * this._scrollPaneBorderSize;
+			
 			this._scrollBar.render();
 			this._scrollThumb.render();
+			this._scrollPaneBackground.render();
 		}
 		
 		protected function calculateScrollThumbPosition():Number {
@@ -351,6 +372,51 @@ package inf.application.views.components {
 		
 		public function set lastContentHeight(value:Number):void {
 			this._lastContentHeight = value;
+		}
+		
+		public function get scrollPaneBorderColor():uint {
+			return this._scrollAreaBackgroundColor;
+		}
+		
+		public function set scrollPaneBorderColor(value:uint):void {
+			this._scrollAreaBackgroundColor = value;
+			this.render();
+		}
+		
+		public function get scrollPaneBorderSize():Number {
+			return this._scrollPaneBorderSize;
+		}
+		
+		public function set scrollPaneBorderSize(value:Number):void {
+			this._scrollPaneBorderSize = value;
+			this.render();
+		}
+		
+		public function get scrollPaneBorderAlpha():Number {
+			return this._scrollPaneBorderAlpha;
+		}
+		
+		public function set scrollPaneBorderAlpha(value:Number):void {
+			this._scrollPaneBorderAlpha = value;
+			this.render();
+		}
+		
+		public function get scrollPaneBackgroundAlpha():Number {
+			return this._scrollPaneBackgroundAlpha;
+		}
+		
+		public function set scrollPaneBackgroundAlpha(value:Number):void {
+			this._scrollPaneBackgroundAlpha = value;
+			this.render();
+		}
+		
+		public function get scrollPaneBackgroundColor():uint {
+			return this._scrollPaneBackgroundColor;
+		}
+		
+		public function set scrollPaneBackgroundColor(value:uint):void {
+			this._scrollPaneBackgroundColor = value;
+			this.render();
 		}
 	}
 }

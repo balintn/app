@@ -30,6 +30,16 @@ package inf.application.models {
 		
 		private var _scrollLimitBottom:int;
 		
+		private var _scrollPaneBorderColor:uint;
+		
+		private var _scrollPaneBorderSize:Number;
+		
+		private var _scrollPaneBorderAlpha:Number;
+		
+		private var _scrollPaneBackgroundColor:uint;
+		
+		private var _scrollPaneBackgroundAlpha:Number;
+		
 		private var _spaceBetweenScrollAndList:int;
 		
 		private var _itemWidth:int;
@@ -102,6 +112,26 @@ package inf.application.models {
 			this._scrollLimitBottom = value;
 		}
 		
+		internal function setScrollPaneBorderColor(value:uint):void {
+			this._scrollPaneBorderColor = value;
+		}
+		
+		internal function setScrollPaneBorderAlpha(value:Number):void {
+			this._scrollPaneBorderAlpha = value;
+		}
+		
+		internal function setScrollPaneBorderSize(value:Number):void {
+			this._scrollPaneBorderSize = value;
+		}
+		
+		internal function setScrollPaneBackgroundAlpha(value:Number):void {
+			this._scrollPaneBackgroundAlpha = value;
+		}
+		
+		internal function setScrollPaneBackgroundColor(value:uint):void {
+			this._scrollPaneBackgroundColor = value;
+		}
+		
 		public function get scrollWidth():uint {
 			return this._scrollWidth;
 		}
@@ -156,6 +186,26 @@ package inf.application.models {
 		
 		public function get scrollLimitBottom():int {
 			return this._scrollLimitBottom;
+		}
+		
+		public function get scrollPaneBorderColor():int {
+			return this._scrollPaneBorderColor;
+		}
+		
+		public function get scrollPaneBorderSize():Number {
+			return this._scrollPaneBorderSize;
+		}
+		
+		public function get scrollPaneBorderAlpha():Number {
+			return this._scrollPaneBorderAlpha;
+		}
+		
+		public function get scrollPaneBackgroundColor():int {
+			return this._scrollPaneBackgroundColor;
+		}
+		
+		public function get scrollPaneBackgroundAlpha():Number {
+			return this._scrollPaneBackgroundAlpha;
 		}
 	}
 }

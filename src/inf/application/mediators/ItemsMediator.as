@@ -174,7 +174,8 @@ package inf.application.mediators {
 					image.height *= multiplier;
 					image.addEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage);
 					viewComp.addEventListener(MouseEvent.MOUSE_DOWN, this.onImageMouseDown);
-					viewComp.addImage(image);
+					viewComp.addImage(image, model.marked);
+					viewComp.render();
 				}
 			}
 		}

@@ -35,8 +35,8 @@ package inf.application.models {
 			this._filePath = value;
 		}
 		
-		internal function setMarked(value:uint):void {
-			this._marked = value as Boolean;
+		internal function setMarked(value:Boolean):void {
+			this._marked = value;
 		}
 		
 		public function setImage(image:DisplayObject):void {

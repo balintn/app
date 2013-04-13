@@ -1,5 +1,7 @@
 package inf.application.views {
 	import flash.display.DisplayObject;
+	import flash.display.Graphics;
+	import flash.display.Shape;
 	
 	import inf.application.models.EditorBoxModel;
 	import inf.application.views.components.BackgroundedComponent;
@@ -15,6 +17,7 @@ package inf.application.views {
 		
 		private var _uploadButton:BackgroundedComponent;
 		private var _imageContainer:BackgroundedComponent;
+		private var _imageContainerMask:Shape;
 		private var _loadedImage:DisplayObject;
 		
 		public function EditorView(model:EditorBoxModel) {
@@ -32,6 +35,9 @@ package inf.application.views {
 			this._imageContainer.borderSize = 1;
 			this.addChild(this._imageContainer);
 			
+			this._imageContainerMask = new Shape();
+			this.addChild(this._imageContainerMask);
+			
 		}
 		
 		public override function render():void {
@@ -43,9 +49,28 @@ package inf.application.views {
 			this._imageContainer.width = this.width - 2 * EditorView.PADDING;
 			this._imageContainer.height = this.height - 2 * EditorView.PADDING;
 			
+			// create mask
+			this._imageContainer.mask = this.createContainerMask();
 			
 			this._imageContainer.render();
 			this._uploadButton.render();
+		}
+		
+		private function createContainerMask():Shape {
+			
+			var mg:Graphics = this._imageContainerMask.graphics;
+			
+			mg.clear();
+			mg.beginFill(0xff0000,.9);
+			mg.drawRect(
+				this._imageContainer.x - this._imageContainer.borderSize,
+				this._imageContainer.y - this._imageContainer.borderSize,
+				this._imageContainer.width + 2 * this._imageContainer.borderSize,
+				this._imageContainer.height + 2 * this._imageContainer.borderSize
+			);
+			mg.endFill();
+			
+			return this._imageContainerMask;
 		}
 		
 		public function addImageToContainer(image:DisplayObject):void {

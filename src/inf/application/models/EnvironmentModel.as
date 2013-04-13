@@ -22,12 +22,6 @@ package inf.application.models {
 		private var _appBackgroundAlpha:Number;
 		
 		/**
-		 * Base url
-		 * @var String
-		 */
-		private var _baseUrl:String;
-		
-		/**
 		 * Singleton instance
 		 * @var EnvironmentModel
 		 */
@@ -47,20 +41,12 @@ package inf.application.models {
 			return this._appBackgroundAlpha;
 		}
 		
-		public function get baseUrl():String {
-			return this._baseUrl;
-		}
-		
 		internal function setAppBackgroundColor(value:uint):void {
 			this._appBackgroundColor = value;
 		}
 		
 		internal function setAppBackgroundAlpha(value:Number):void {
 			this._appBackgroundAlpha = value;
-		}
-		
-		internal function setBaseUrl(value:String):void {
-			this._baseUrl = value;
 		}
 		
 		/**

@@ -1,4 +1,5 @@
 package inf.application.views.components {
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	
 	/**
@@ -39,12 +40,24 @@ package inf.application.views.components {
 			return this._image;
 		}
 		
+		public function get id():uint {
+			return this._id;
+		}
+
 		public override function render():void {
 			this._image.visible = true;
 		}
 		
-		public function get id():uint {
-			return this._id;
+		public function getImageClone():DisplayObject {
+			
+			if (this._image != null) {
+				
+				var bmp:Bitmap = this._image as Bitmap;
+				var retBmp:Bitmap = new Bitmap(bmp.bitmapData.clone());
+				
+				return retBmp as DisplayObject;
+			}
+			return null;
 		}
 		
 	}

@@ -109,11 +109,24 @@ package inf.application.mediators {
 			
 			// load images
 			ImageItemHandler.loadImages();
+			
+			this.setViewsIndex();
 		}
 		
 		private function editorViewAddedToStage(event:Event):void {
 			// render
 			(event.currentTarget as EditorView).render();
+			
+			this.setViewsIndex();
+		}
+		
+		private function setViewsIndex():void {
+			var ev:EditorView = (this.facade.retrieveMediator(EditorMediator.NAME) as EditorMediator).view;
+			var iv:ItemsView = (this.facade.retrieveMediator(ItemsMediator.NAME) as ItemsMediator).view;
+			
+			if (this.app.contains(ev) && this.app.contains(iv)) {
+				this.app.setChildIndex(iv, this.app.numChildren - 1);
+			}
 		}
 		
 		/**

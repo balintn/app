@@ -1,15 +1,23 @@
 package inf.application.mediators {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
+	import flash.display.InteractiveObject;
+	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
 	import inf.application.ApplicationFacade;
 	import inf.application.handlers.ImageItemHandler;
 	import inf.application.models.ImageItemModel;
 	import inf.application.models.ItemsBoxModel;
+	import inf.application.views.EditorView;
 	import inf.application.views.ItemsView;
 	import inf.application.views.components.BaseComponent;
+	import inf.application.views.components.DraggedImageComponent;
 	import inf.application.views.components.ImageItemComponent;
 	import inf.application.views.components.ScrollComponent;
 	import inf.utils.Hash;
@@ -35,10 +43,22 @@ package inf.application.mediators {
 		private var _itemViewsById:Object;
 		
 		/**
+		 * Contains a Point instance whith the original x and y coordinates (in the container)
+		 * @var Object
+		 */
+		private var _itemViewOriginalPositionsById:Object;
+		
+		/**
 		 * ImageItemComponent instance list. Ordered by instance creation time
 		 * @var Array
 		 */
 		private var _itemViewsOrdered:Array;
+		
+		/**
+		 * This variable references to the image which we drag
+		 * @var DraggedImageComponent
+		 */
+		private var _draggedImage:DraggedImageComponent;
 		
 		private var _availableImageWidth:Number = NaN;
 		
@@ -47,6 +67,7 @@ package inf.application.mediators {
 			super(ItemsMediator.NAME, viewComponent);
 			
 			this._itemViewsById = {};
+			this._itemViewOriginalPositionsById = {};
 			this._itemViewsOrdered = [];
 			
 			// let's create the views and position them
@@ -59,12 +80,13 @@ package inf.application.mediators {
 			var itemModels:Dictionary = ImageItemHandler.getItems().getAll();
 			for (var key:Object in itemModels) {
 				
-				var tmp:ImageItemComponent = new ImageItemComponent();
+				var tmp:ImageItemComponent = new ImageItemComponent(key.id);
 				
 				this.view.itemsContainer.addChild(tmp);
 				
 				// cache it
 				this._itemViewsById[key.id] = tmp;
+				this._itemViewOriginalPositionsById[key.id] = {};
 				this._itemViewsOrdered.push(tmp);
 			}
 			
@@ -103,6 +125,9 @@ package inf.application.mediators {
 			for (var i:uint = 0; i < this._itemViewsOrdered.length; i++) {
 				
 				this._itemViewsOrdered[i].y = offset;
+				
+				// cache original coordinates
+				this._itemViewOriginalPositionsById[this._itemViewsOrdered[i].id] = new Point(this._itemViewsOrdered[i].x, this._itemViewsOrdered[i].y);
 				
 				var itemComp:ImageItemComponent = this._itemViewsOrdered[i] as ImageItemComponent;
 				
@@ -148,6 +173,7 @@ package inf.application.mediators {
 					image.width *= multiplier;
 					image.height *= multiplier;
 					image.addEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage);
+					viewComp.addEventListener(MouseEvent.MOUSE_DOWN, this.onImageMouseDown);
 					viewComp.addImage(image);
 				}
 			}
@@ -158,9 +184,73 @@ package inf.application.mediators {
 			this._scrollMediator.setScrollContent(this.view.itemsContainer);
 		}
 		
+		private function onImageMouseDown(event:MouseEvent):void {
+			
+			if (event.currentTarget is ImageItemComponent) {
+				var comp:ImageItemComponent = event.currentTarget as ImageItemComponent;
+				var clonedImage:DisplayObject = comp.getImageClone();
+				
+				this.addDraggableImageToStage(clonedImage);
+			}
+			
+			this._draggedImage.startDrag();
+			if (! this._draggedImage.hasEventListener(Event.ENTER_FRAME)) {
+				this._draggedImage.addEventListener(Event.ENTER_FRAME, this.onDraggedImageEnterframe);
+			}
+		}
+		
+		private function onImageMouseUp(event:MouseEvent):void {
+			var comp:ImageItemComponent = event.currentTarget as ImageItemComponent;
+			this._draggedImage.stopDrag();
+			
+			if (this._draggedImage.hasEventListener(Event.ENTER_FRAME)) {
+				this._draggedImage.removeEventListener(Event.ENTER_FRAME, this.onDraggedImageEnterframe);
+			}
+			
+			var ev:EditorView = (this.facade.retrieveMediator(EditorMediator.NAME) as EditorMediator).view;
+			var evRect:Rectangle = ev.getRect(ev.stage);
+			var diRect:Rectangle = this._draggedImage.getRect(ev.stage);
+			
+			// drops image if it is not placed on editor
+			if (! evRect.containsRect(diRect)) {
+				this.removeDraggableImageFromStage();	
+			}
+			
+		}
+		
+		private function onDraggedImageEnterframe(event:Event):void {
+			
+			var stage:Stage = (this.facade.retrieveMediator(EditorMediator.NAME) as EditorMediator).view.stage as Stage;
+			if (stage.mouseX <= 0 || stage.mouseX >= stage.stageWidth || stage.mouseY <= 0 || stage.mouseY >= stage.stageHeight) {
+				this.onImageMouseUp(new MouseEvent("fakeEvent"));
+			}
+			
+		}
+		
 		private function onImageAddedToStage(event:Event):void {
 			this.recalculateItemsPosition();
 			(event.currentTarget as Bitmap).removeEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage);
+		}
+		
+		private function addDraggableImageToStage(image:DisplayObject):void {
+			
+			if (this._draggedImage == null) {
+				this._draggedImage = new DraggedImageComponent();
+				this.view.stage.addChild(this._draggedImage);
+				
+				this._draggedImage.addEventListener(MouseEvent.MOUSE_UP, this.onImageMouseUp);
+				this._draggedImage.addEventListener(MouseEvent.MOUSE_DOWN, this.onImageMouseDown);
+			}
+			this._draggedImage.addImage(image);
+			this._draggedImage.x = this.view.stage.mouseX - this._draggedImage.width / 2;
+			this._draggedImage.y = this.view.stage.mouseY - this._draggedImage.height / 2;
+			
+		}
+		
+		private function removeDraggableImageFromStage():void {
+			if (this._draggedImage != null) {
+				this._draggedImage.removeImage();
+			}
 		}
 		
 		private function getAvailableImageWidth():Number {

@@ -191,7 +191,10 @@ package inf.application.mediators {
 				var clonedImage:DisplayObject = comp.getImageClone();
 				
 				this.addDraggableImageToStage(clonedImage);
+				
+				this._draggedImage.render();
 			}
+			this._draggedImage.visible = true;
 			
 			this._draggedImage.startDrag();
 			if (! this._draggedImage.hasEventListener(Event.ENTER_FRAME)) {
@@ -214,6 +217,7 @@ package inf.application.mediators {
 			// drops image if it is not placed on editor
 			if (! evRect.containsRect(diRect)) {
 				this.removeDraggableImageFromStage();	
+				this._draggedImage.visible = false;
 			}
 			
 		}

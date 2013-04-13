@@ -375,11 +375,11 @@ package inf.application.views.components {
 		}
 		
 		public function get scrollPaneBorderColor():uint {
-			return this._scrollAreaBackgroundColor;
+			return this._scrollPaneBorderColor;
 		}
 		
 		public function set scrollPaneBorderColor(value:uint):void {
-			this._scrollAreaBackgroundColor = value;
+			this._scrollPaneBorderColor = value;
 			this.render();
 		}
 		

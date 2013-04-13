@@ -111,17 +111,16 @@ package inf.application.proxies {
 						ImageItemHandler.createModelsFromArray(response[HandshakeProxy.PROP_ITEMS]);
 						Logger.info("Item models created..");
 					}
-					
-					
-					// sending notification
-					this.sendNotification(ApplicationFacade.APP_HANDSHAKE_DATA_LOADED, response);
-					
 				} else {
 					throw new Error("No valid response came from server");
 				}
 			} catch(e:Error) {
 				Logger.error("Failed to process handshake data! Exception: " + e.message);
+				return null;
 			}
+			
+			// sending notification
+			this.sendNotification(ApplicationFacade.APP_HANDSHAKE_DATA_LOADED, response);
 			
 			return response;
 		}

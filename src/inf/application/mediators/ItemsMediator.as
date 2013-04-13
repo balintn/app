@@ -32,6 +32,9 @@ package inf.application.mediators {
 	 */
 	public class ItemsMediator extends Mediator {
 		
+		private var _scrollPaddingTop:Number = 20;
+		private var _scrollPaddingBottom:Number = 20;
+		
 		public static const NAME:String = "itemsMediator";
 		
 		private var _scrollMediator:ScrollMediator;
@@ -93,7 +96,7 @@ package inf.application.mediators {
 			// register scroll mediator
 			var scrollCompWidth:Number = boxModel.itemWidth + boxModel.spaceBetweenScrollAndList + boxModel.scrollWidth;
 			
-			var scrollComp:ScrollComponent = this.view.createScrollComponent(scrollCompWidth, boxModel.height);
+			var scrollComp:ScrollComponent = this.view.createScrollComponent(scrollCompWidth, boxModel.height - this._scrollPaddingTop - this._scrollPaddingBottom);
 			scrollComp.addEventListener(Event.ADDED_TO_STAGE, this.onScrollComponenentAddedToStage);
 			
 			scrollComp.scrollBarWidth = boxModel.scrollWidth;
@@ -109,6 +112,9 @@ package inf.application.mediators {
 			scrollComp.scrollThumbWidth = boxModel.scrollThumbWidth;
 			scrollComp.scrollThumbHeight = boxModel.scrollThumbHeight;
 			scrollComp.scrollThumbColor = boxModel.scrollThumbColor;
+			
+			scrollComp.x = this.view.width - scrollComp.width / 2 - this.view.width / 2;
+			scrollComp.y = this.view.height - scrollComp.height / 2 - this.view.height / 2;
 			
 			this._scrollMediator = new ScrollMediator(scrollComp, ItemsMediator.NAME);
 			this._scrollMediator.animatedScroll = true;

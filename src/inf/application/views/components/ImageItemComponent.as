@@ -9,8 +9,12 @@ package inf.application.views.components {
 		
 		private var _image:DisplayObject;
 		
-		public function ImageItemComponent(width = 0, height = 0, image:DisplayObject = null, align:String=BackgroundedComponent.LEFT_TOP, bgColor:uint=0xffffff, bgAlpha:Number=0, borderSize:Number=0, borderColor:uint=0, borderAlpha:Number=0) {
+		private var _id:uint;
+		
+		public function ImageItemComponent(id:uint, width:Number = 0, height:Number = 0, image:DisplayObject = null, align:String=BackgroundedComponent.LEFT_TOP, bgColor:uint=0xffffff, bgAlpha:Number=0, borderSize:Number=0, borderColor:uint=0, borderAlpha:Number=0) {
 			super(width, height, align, bgColor, bgAlpha, borderSize, borderColor, borderAlpha);
+			
+			this._id = id;
 			
 			if (image != null) {
 				this.addImage(image);
@@ -38,5 +42,10 @@ package inf.application.views.components {
 		public override function render():void {
 			this._image.visible = true;
 		}
+		
+		public function get id():uint {
+			return this._id;
+		}
+		
 	}
 }

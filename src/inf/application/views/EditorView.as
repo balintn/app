@@ -16,12 +16,19 @@ package inf.application.views {
 		public static var PADDING:int = 20;
 		
 		private var _uploadButton:BackgroundedComponent;
+		private var _clearButton:BackgroundedComponent;
 		private var _imageContainer:BackgroundedComponent;
 		private var _imageContainerMask:Shape;
 		private var _loadedImage:DisplayObject;
 		
 		public function EditorView(model:EditorBoxModel) {
 			super(model);
+			
+			this._clearButton = new BackgroundedComponent();
+			this._clearButton.backgroundColor = 0x00ffff;
+			this._clearButton.width = 40;
+			this._clearButton.height = 16;
+			this.addChild(this._clearButton);
 			
 			this._uploadButton = new BackgroundedComponent();
 			this._uploadButton.backgroundColor = 0xff00ff;
@@ -54,6 +61,7 @@ package inf.application.views {
 			
 			this._imageContainer.render();
 			this._uploadButton.render();
+			this._clearButton.render();
 		}
 		
 		private function createContainerMask():Shape {
@@ -61,7 +69,7 @@ package inf.application.views {
 			var mg:Graphics = this._imageContainerMask.graphics;
 			
 			mg.clear();
-			mg.beginFill(0xff0000,.9);
+			mg.beginFill(0xff0000,1);
 			mg.drawRect(
 				this._imageContainer.x - this._imageContainer.borderSize,
 				this._imageContainer.y - this._imageContainer.borderSize,
@@ -86,8 +94,21 @@ package inf.application.views {
 			this._loadedImage.y = this._imageContainer.height / 2 - this._loadedImage.height / 2;
 		}
 		
+		public function clearImageFromContainer():void {
+			if (this._loadedImage != null) {
+				if (this._imageContainer.contains(this._loadedImage)) {
+					this._imageContainer.removeChild(this._loadedImage);
+				}
+				this._loadedImage = null;
+			}
+		}
+		
 		public function get uploadButton():BackgroundedComponent {
 			return this._uploadButton;
+		}
+		
+		public function get clearButton():BackgroundedComponent {
+			return this._clearButton;
 		}
 	}
 }

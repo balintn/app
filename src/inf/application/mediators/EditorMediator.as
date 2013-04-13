@@ -35,6 +35,7 @@ package inf.application.mediators {
 			super(EditorMediator.NAME, viewComponent);
 			
 			viewComponent.uploadButton.addEventListener(MouseEvent.CLICK, this.onUploadButtonClick);
+			viewComponent.clearButton.addEventListener(MouseEvent.CLICK, this.onClearButtonClick);
 			viewComponent.addEventListener(Event.ADDED_TO_STAGE, this.editorViewAddedToStage);
 			
 			this._fileFilter = new FileFilter("Image files", "*.jpg;*.gif;*.png");
@@ -69,13 +70,18 @@ package inf.application.mediators {
 		
 		}
 		
+		protected function onClearButtonClick(event:MouseEvent):void {
+			this.view.clearImageFromContainer();
+		}
+		
 		protected function onUploadButtonClick(event:MouseEvent):void {
 			this._fileReference.browse([this._fileFilter]);
 		}
 		
 		protected function editorViewAddedToStage(event:Event):void {
 			this.view.render();
-			this.view.uploadButton.y = this.view.height - this.view.uploadButton.height;
+			this.view.clearButton.y = this.view.uploadButton.y = this.view.height - this.view.uploadButton.height;
+			this.view.clearButton.x = this.view.uploadButton.x + this.view.uploadButton.width + 5;
 		}
 		
 		

@@ -2,6 +2,7 @@ package inf.application.views.components {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
+	import flash.text.TextField;
 	
 	/**
 	 * ImageItemComponent class
@@ -17,6 +18,11 @@ package inf.application.views.components {
 		
 		private var _marked:Boolean;
 		
+		private var _titleTextField:TextField;
+		
+		private var _titleBackground:BackgroundedComponent;
+		
+		
 		public function ImageItemComponent(id:uint, width:Number = 0, height:Number = 0, image:DisplayObject = null, align:String=BackgroundedComponent.LEFT_TOP, bgColor:uint=0xffffff, bgAlpha:Number=0, borderSize:Number=0, borderColor:uint=0, borderAlpha:Number=0) {
 			super(width, height, align, bgColor, bgAlpha, borderSize, borderColor, borderAlpha);
 			
@@ -28,6 +34,27 @@ package inf.application.views.components {
 			
 			this._mark = new Shape();
 			this.addChild(this._mark);
+		}
+		
+		public function addTitleText(label:String):void {
+			
+			if (this._titleBackground == null) {
+				this._titleBackground = new BackgroundedComponent();
+			}
+			
+			if (! this.contains(this._titleBackground)) {
+				this.addChild(this._titleBackground);
+			}
+			
+			if (this._titleTextField == null) {
+				this._titleTextField = new TextField();				
+			}
+			
+			if (! this.contains(this._titleTextField)) {
+				this.addChild(this._titleTextField);
+			}
+			
+			this._titleTextField.text = label;
 		}
 		
 		public function addImage(image:DisplayObject, marked:Boolean = false):void {
@@ -66,6 +93,17 @@ package inf.application.views.components {
 				this._mark.graphics.endFill();
 				this.setChildIndex(this._mark, this.numChildren - 1);
 			}
+			
+			if (this._titleBackground == null) {
+				this.addTitleText("");
+			}
+			this._titleBackground.width = this._image.width;
+			this._titleBackground.y = this._image.height;
+				
+			// todo ez miezitt?? ejnye no...
+			this._titleBackground.height = 20;
+				
+			this._titleBackground.render();
 			
 		}
 		

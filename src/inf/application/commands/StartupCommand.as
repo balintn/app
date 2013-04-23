@@ -21,6 +21,7 @@ package inf.application.commands {
 			
 			// register handshake proxy
 			facade.registerProxy(new HandshakeProxy("http://localhost/flashapp/getInitialData.php"));			
+			//facade.registerProxy(new HandshakeProxy("http://tintapatronok.eu/getInitialData.php"));			
 			
 			if (notification.getBody() is flash_app) {
 				// register ApplicationMediator

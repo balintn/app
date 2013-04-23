@@ -46,6 +46,12 @@ package inf.application.models {
 		
 		private var _spaceBetweenItems:int;
 		
+		private var _titleColor:uint;
+		
+		private var _titleBackgroundColor:uint;
+		
+		private var _titleBackgroundAlpha:Number;
+		
 		
 		public function ItemsBoxModel(enforcer:SingletonEnforcer) {
 			super();
@@ -132,6 +138,20 @@ package inf.application.models {
 			this._scrollPaneBackgroundColor = value;
 		}
 		
+		internal function setTitleColor(value:uint):void {
+			this._titleColor = value;
+		}
+		
+		internal function setTitleBackgroundColor(value:uint):void {
+			this._titleBackgroundColor = value;
+		}
+		
+		internal function setTitleBackgroundAlpha(value:Number):void {
+			this._titleBackgroundAlpha = value;
+		}
+
+		
+		
 		public function get scrollWidth():uint {
 			return this._scrollWidth;
 		}
@@ -207,6 +227,19 @@ package inf.application.models {
 		public function get scrollPaneBackgroundAlpha():Number {
 			return this._scrollPaneBackgroundAlpha;
 		}
+		
+		public function get titleColor():uint {
+			return this._titleColor;
+		}
+		
+		public function get titleBackgroundColor():Number {
+			return this._titleBackgroundColor;
+		}
+		
+		public function get titleBackgroundAlpha():Number {
+			return this._titleBackgroundAlpha;
+		}
+				
 	}
 }
 class SingletonEnforcer {

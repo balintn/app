@@ -50,8 +50,8 @@ package inf.application.views.components {
 				this._titleTextField = new TextField();				
 			}
 			
-			if (! this.contains(this._titleTextField)) {
-				this.addChild(this._titleTextField);
+			if (! this._titleBackground.contains(this._titleTextField)) {
+				this._titleBackground.addChild(this._titleTextField);
 			}
 			
 			this._titleTextField.text = label;
@@ -79,6 +79,10 @@ package inf.application.views.components {
 		public function get id():uint {
 			return this._id;
 		}
+		
+		public function get titleBackground():BackgroundedComponent {
+			return this._titleBackground;
+		}
 
 		public override function render():void {
 			super.render();
@@ -99,10 +103,11 @@ package inf.application.views.components {
 			}
 			this._titleBackground.width = this._image.width;
 			this._titleBackground.y = this._image.height;
-				
 			// todo ez miezitt?? ejnye no...
 			this._titleBackground.height = 20;
-				
+			
+			this.height = this._image.height + this._titleBackground.height;
+			
 			this._titleBackground.render();
 			
 		}

@@ -29,6 +29,8 @@ package inf.application.mediators {
 	/**
 	 * ItemsMediator
 	 * @author inf
+	 * 
+	 * @TODO tarolni kell az onImageAddedToStage fv-k referenciajat, hogy lehessen removeEventListenert mondani a komponensnek (ImageItemComponent)
 	 */
 	public class ItemsMediator extends Mediator {
 		
@@ -66,6 +68,7 @@ package inf.application.mediators {
 		private var _availableImageWidth:Number = NaN;
 		
 		
+		
 		public function ItemsMediator(viewComponent:ItemsView) {
 			super(ItemsMediator.NAME, viewComponent);
 			
@@ -82,8 +85,14 @@ package inf.application.mediators {
 			var imageWidth:int = boxModel.itemWidth;
 			var itemModels:Dictionary = ImageItemHandler.getItems().getAll();
 			for (var key:Object in itemModels) {
+				var itemModel:ImageItemModel = key as ImageItemModel;
+				var tmp:ImageItemComponent = new ImageItemComponent(itemModel.id);
 				
-				var tmp:ImageItemComponent = new ImageItemComponent(key.id);
+				tmp.addTitleText(itemModel.title);
+				
+				tmp.titleBackground.backgroundColor = boxModel.titleBackgroundColor;
+				tmp.titleBackground.backgroundAlpha = boxModel.titleBackgroundAlpha;
+				tmp.titleBackground.borderAlpha = 0;
 				
 				this.view.itemsContainer.addChild(tmp);
 				
@@ -143,7 +152,7 @@ package inf.application.mediators {
 				
 				var itemComp:ImageItemComponent = this._itemViewsOrdered[i] as ImageItemComponent;
 				
-				offset += (itemComp.image != null) ? itemComp.image.height + this.spaceBetweenItems : 0;
+				offset += (itemComp.image != null) ? itemComp.height + this.spaceBetweenItems : 0;
 			}
 			this.view.itemsContainer.height = offset - this.spaceBetweenItems;
 			this._scrollMediator.forceRender();
@@ -184,7 +193,7 @@ package inf.application.mediators {
 					var multiplier:Number = (image.width < targetWidth) ? image.width / targetWidth : targetWidth / image.width;
 					image.width *= multiplier;
 					image.height *= multiplier;
-					image.addEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage);
+					image.addEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage(viewComp));
 					viewComp.addEventListener(MouseEvent.MOUSE_DOWN, this.onImageMouseDown);
 					viewComp.addImage(image, model.marked);
 					viewComp.render();
@@ -227,7 +236,7 @@ package inf.application.mediators {
 			var evRect:Rectangle = ev.getRect(ev.stage);
 			var diRect:Rectangle = this._draggedImage.getRect(ev.stage);
 			
-			// drops image if it is not placed on editor
+			// drops image if it is not placed on editor area
 			if (! evRect.containsRect(diRect)) {
 				this.removeDraggableImageFromStage();	
 				this._draggedImage.visible = false;
@@ -244,9 +253,15 @@ package inf.application.mediators {
 			
 		}
 		
-		private function onImageAddedToStage(event:Event):void {
-			this.recalculateItemsPosition();
-			(event.currentTarget as Bitmap).removeEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage);
+		private function onImageAddedToStage(comp:ImageItemComponent):Function {
+			
+			var recalculateItemsPosition:Function = this.recalculateItemsPosition;
+			
+			return function(event:Event):void {
+				comp.render();
+				recalculateItemsPosition();
+				//(event.currentTarget as Bitmap).removeEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage);	
+			}
 		}
 		
 		private function addDraggableImageToStage(image:DisplayObject):void {

@@ -6,6 +6,7 @@ package inf.application.views {
 	import inf.application.models.EditorBoxModel;
 	import inf.application.views.components.BackgroundedComponent;
 	import inf.application.views.components.BoxComponent;
+	import inf.application.views.components.ButtonComponent;
 	
 	/**
 	 * EditorView class
@@ -15,8 +16,8 @@ package inf.application.views {
 		
 		public static var PADDING:int = 20;
 		
-		private var _uploadButton:BackgroundedComponent;
-		private var _clearButton:BackgroundedComponent;
+		private var _uploadButton:ButtonComponent;
+		private var _clearButton:ButtonComponent;
 		private var _imageContainer:BackgroundedComponent;
 		private var _imageContainerMask:Shape;
 		private var _loadedImage:DisplayObject;
@@ -24,16 +25,10 @@ package inf.application.views {
 		public function EditorView(model:EditorBoxModel) {
 			super(model);
 			
-			this._clearButton = new BackgroundedComponent();
-			this._clearButton.backgroundColor = 0x00ffff;
-			this._clearButton.width = 40;
-			this._clearButton.height = 16;
+			this._clearButton = new ButtonComponent();
 			this.addChild(this._clearButton);
 			
-			this._uploadButton = new BackgroundedComponent();
-			this._uploadButton.backgroundColor = 0xff00ff;
-			this._uploadButton.width = 40;
-			this._uploadButton.height = 16;
+			this._uploadButton = new ButtonComponent();
 			this.addChild(this._uploadButton);
 			
 			this._imageContainer = new BackgroundedComponent();
@@ -62,6 +57,10 @@ package inf.application.views {
 			this._imageContainer.render();
 			this._uploadButton.render();
 			this._clearButton.render();
+			
+			this.setChildIndex(this._uploadButton, this.numChildren - 1);
+			this.setChildIndex(this._clearButton, this.numChildren - 1);
+			
 		}
 		
 		private function createContainerMask():Shape {
@@ -103,11 +102,11 @@ package inf.application.views {
 			}
 		}
 		
-		public function get uploadButton():BackgroundedComponent {
+		public function get uploadButton():ButtonComponent {
 			return this._uploadButton;
 		}
 		
-		public function get clearButton():BackgroundedComponent {
+		public function get clearButton():ButtonComponent {
 			return this._clearButton;
 		}
 	}

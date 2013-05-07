@@ -12,6 +12,7 @@ package inf.application.mediators {
 	import flash.net.FileReference;
 	import flash.utils.ByteArray;
 	
+	import inf.application.models.EditorBoxModel;
 	import inf.application.models.EnvironmentModel;
 	import inf.application.views.EditorView;
 	
@@ -79,9 +80,34 @@ package inf.application.mediators {
 		}
 		
 		protected function editorViewAddedToStage(event:Event):void {
+			
+			var editorModel:EditorBoxModel = EditorBoxModel.getInstance();
+			
+			this.view.uploadButton.backgroundColor = editorModel.btnUploadBackgroundColor;
+			this.view.uploadButton.backgroundAlpha = editorModel.btnUploadBackgroundAlpha;
+			this.view.uploadButton.borderColor = editorModel.btnUploadBorderColor;
+			this.view.uploadButton.borderAlpha = editorModel.btnUploadBorderAlpha;
+			this.view.uploadButton.borderSize = editorModel.btnUploadBorderSize;
+			this.view.uploadButton.setText(editorModel.btnUploadText);
+			this.view.uploadButton.width = editorModel.btnUploadWidth;
+			this.view.uploadButton.height = editorModel.btnUploadHeight;
+			this.view.uploadButton.x = editorModel.btnUploadX;
+			this.view.uploadButton.y = editorModel.btnUploadY;
+			this.view.uploadButton.buttonMode = this.view.uploadButton.useHandCursor = true;
+			
+			this.view.clearButton.backgroundColor = editorModel.btnEraseBackgroundColor;
+			this.view.clearButton.backgroundAlpha = editorModel.btnEraseBackgroundAlpha;
+			this.view.clearButton.borderColor = editorModel.btnEraseBorderColor;
+			this.view.clearButton.borderAlpha = editorModel.btnEraseBorderAlpha;
+			this.view.clearButton.borderSize = editorModel.btnEraseBorderSize;
+			this.view.clearButton.setText(editorModel.btnEraseText);
+			this.view.clearButton.width = editorModel.btnEraseWidth;
+			this.view.clearButton.height = editorModel.btnEraseHeight;
+			this.view.clearButton.x = editorModel.btnEraseX;
+			this.view.clearButton.y = editorModel.btnEraseY;
+			this.view.clearButton.buttonMode = this.view.clearButton.useHandCursor = true;
+			
 			this.view.render();
-			this.view.clearButton.y = this.view.uploadButton.y = this.view.height - this.view.uploadButton.height;
-			this.view.clearButton.x = this.view.uploadButton.x + this.view.uploadButton.width + 5;
 		}
 		
 		

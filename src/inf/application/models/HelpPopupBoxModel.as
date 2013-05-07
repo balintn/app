@@ -8,8 +8,11 @@ package inf.application.models {
 		
 		private static var _instance:HelpPopupBoxModel;
 		
+		private var _helpText:String;
+		
 		public function HelpPopupBoxModel() {
 			super();
+			HelpPopupBoxModel._instance = this;
 		}
 		
 		public function EditorBoxModel(enforcer:SingletonEnforcer) {
@@ -20,6 +23,15 @@ package inf.application.models {
 		public static function getInstance():EditorBoxModel {
 			return (HelpPopupBoxModel._instance != null) ? HelpPopupBoxModel._instance : new EditorBoxModel(new SingletonEnforcer);
 		}
+		
+		internal function setHelpText(value:String):void {
+			this._helpText = unescape(value).replace(/\+/g, " ");
+		}
+		
+		public function get helpText():String {
+			return this._helpText;
+		}
+		
 	}
 	
 }

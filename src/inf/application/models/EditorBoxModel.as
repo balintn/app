@@ -79,7 +79,7 @@ package inf.application.models {
 		}
 		
 		internal function setBtnUploadText(value:String):void {
-			this._btnUploadText = unescape(value);
+			this._btnUploadText = unescape(value).replace(/\+/g, " ");
 		}
 		
 		internal function setBtnUploadX(value:Number):void {
@@ -119,7 +119,7 @@ package inf.application.models {
 		}
 		
 		internal function setBtnEraseText(value:String):void {
-			this._btnEraseText = unescape(value);
+			this._btnEraseText = unescape(value).replace(/\+/g, " ");
 		}
 		
 		internal function setBtnEraseX(value:Number):void {

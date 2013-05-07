@@ -3,6 +3,7 @@ package inf.application.views.components {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	
 	/**
 	 * ImageItemComponent class
@@ -47,14 +48,17 @@ package inf.application.views.components {
 			}
 			
 			if (this._titleTextField == null) {
-				this._titleTextField = new TextField();				
+				this._titleTextField = new TextField();
+				this._titleTextField.multiline = true;
+				this._titleTextField.autoSize = TextFieldAutoSize.LEFT;
+				this._titleTextField.wordWrap = true;
 			}
 			
 			if (! this._titleBackground.contains(this._titleTextField)) {
 				this._titleBackground.addChild(this._titleTextField);
 			}
 			
-			this._titleTextField.text = label;
+			this._titleTextField.htmlText = label;
 		}
 		
 		public function addImage(image:DisplayObject, marked:Boolean = false):void {
@@ -104,7 +108,8 @@ package inf.application.views.components {
 			this._titleBackground.width = this._image.width;
 			this._titleBackground.y = this._image.height;
 			// todo ez miezitt?? ejnye no...
-			this._titleBackground.height = 20;
+			this._titleTextField.width = this._image.width;
+			this._titleBackground.height = this._titleTextField.height;
 			
 			this.height = this._image.height + this._titleBackground.height;
 			

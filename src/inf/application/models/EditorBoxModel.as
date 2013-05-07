@@ -20,6 +20,14 @@ package inf.application.models {
 		
 		private var _btnUploadText:String;
 		
+		private var _btnUploadX:Number;
+		
+		private var _btnUploadY:Number;
+		
+		private var _btnUploadHeight:Number;
+		
+		private var _btnUploadWidth:Number;
+		
 		private var _btnEraseBackgroundColor:uint;
 		
 		private var _btnEraseBackgroundAlpha:Number;
@@ -32,6 +40,13 @@ package inf.application.models {
 		
 		private var _btnEraseText:String;
 		
+		private var _btnEraseX:Number;
+		
+		private var _btnEraseY:Number;
+		
+		private var _btnEraseHeight:Number;
+		
+		private var _btnEraseWidth:Number;
 		
 		
 		public function EditorBoxModel(enforcer:SingletonEnforcer) {
@@ -64,9 +79,25 @@ package inf.application.models {
 		}
 		
 		internal function setBtnUploadText(value:String):void {
-			this._btnUploadText = value;
+			this._btnUploadText = unescape(value);
 		}
 		
+		internal function setBtnUploadX(value:Number):void {
+			this._btnUploadX = value;
+		}
+		
+		internal function setBtnUploadY(value:Number):void {
+			this._btnUploadY = value;
+		}
+		
+		internal function setBtnUploadWidth(value:Number):void {
+			this._btnUploadWidth = value;
+		}
+		
+		internal function setBtnUploadHeight(value:Number):void {
+			this._btnUploadHeight = value;
+		}
+
 		internal function setBtnEraseBackgroundColor(value:uint):void {
 			this._btnEraseBackgroundColor = value;
 		}
@@ -88,9 +119,24 @@ package inf.application.models {
 		}
 		
 		internal function setBtnEraseText(value:String):void {
-			this._btnEraseText = value;
+			this._btnEraseText = unescape(value);
 		}
 		
+		internal function setBtnEraseX(value:Number):void {
+			this._btnEraseX = value;
+		}
+		
+		internal function setBtnEraseY(value:Number):void {
+			this._btnEraseY = value;
+		}
+		
+		internal function setBtnEraseWidth(value:Number):void {
+			this._btnEraseWidth = value;
+		}
+		
+		internal function setBtnEraseHeight(value:Number):void {
+			this._btnEraseHeight = value;
+		}
 		
 		public function get btnUploadBackgroundColor():uint {
 			return this._btnUploadBackgroundColor;
@@ -116,6 +162,22 @@ package inf.application.models {
 			return this._btnUploadText;
 		}
 		
+		public function get btnUploadX():Number {
+			return this._btnUploadX;
+		}
+		
+		public function get btnUploadY():Number {
+			return this._btnUploadY;
+		}
+		
+		public function get btnUploadWidth():Number {
+			return this._btnUploadWidth;
+		}
+		
+		public function get btnUploadHeight():Number {
+			return this._btnUploadHeight;
+		}
+		
 		public function get btnEraseBackgroundColor():uint {
 			return this._btnEraseBackgroundColor;
 		}
@@ -138,6 +200,22 @@ package inf.application.models {
 		
 		public function get btnEraseText():String {
 			return this._btnEraseText;
+		}
+		
+		public function get btnEraseX():Number {
+			return this._btnEraseX;
+		}
+		
+		public function get btnEraseY():Number {
+			return this._btnEraseY;
+		}
+		
+		public function get btnEraseWidth():Number {
+			return this._btnEraseWidth;
+		}
+		
+		public function get btnEraseHeight():Number {
+			return this._btnEraseHeight;
 		}
 	}
 }

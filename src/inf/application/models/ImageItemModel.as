@@ -28,7 +28,7 @@ package inf.application.models {
 		}
 		
 		internal function setTitle(value:String):void {
-			this._title = value;	
+			this._title = unescape(value);	
 		}
 		
 		internal function setFilePath(value:String):void {

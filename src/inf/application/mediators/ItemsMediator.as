@@ -38,6 +38,7 @@ package inf.application.mediators {
 		private var _scrollPaddingBottom:Number = 20;
 		
 		public static const NAME:String = "itemsMediator";
+		public static const SCROLL_MEDIATOR_NAME:String = "itemsScrollMediator";
 		
 		private var _scrollMediator:ScrollMediator;
 		
@@ -106,7 +107,7 @@ package inf.application.mediators {
 			var scrollCompWidth:Number = boxModel.itemWidth + boxModel.spaceBetweenScrollAndList + boxModel.scrollWidth;
 			
 			var scrollComp:ScrollComponent = this.view.createScrollComponent(scrollCompWidth, boxModel.height - this._scrollPaddingTop - this._scrollPaddingBottom);
-			scrollComp.addEventListener(Event.ADDED_TO_STAGE, this.onScrollComponenentAddedToStage);
+			scrollComp.addEventListener(Event.ADDED_TO_STAGE, this.onScrollComponentAddedToStage);
 
 			scrollComp.scrollPaneBorderAlpha = boxModel.scrollPaneBorderAlpha;
 			scrollComp.scrollPaneBorderSize = boxModel.scrollPaneBorderSize;
@@ -131,7 +132,7 @@ package inf.application.mediators {
 			scrollComp.x = this.view.width - scrollComp.width / 2 - this.view.width / 2;
 			scrollComp.y = this.view.height - scrollComp.height / 2 - this.view.height / 2;
 			
-			this._scrollMediator = new ScrollMediator(scrollComp, ItemsMediator.NAME);
+			this._scrollMediator = new ScrollMediator(scrollComp, ItemsMediator.SCROLL_MEDIATOR_NAME);
 			this._scrollMediator.animatedScroll = true;
 			this.facade.registerMediator(this._scrollMediator);
 			this.view.addChild(scrollComp);			
@@ -201,8 +202,8 @@ package inf.application.mediators {
 			}
 		}
 		
-		private function onScrollComponenentAddedToStage(event:Event):void {
-			this._scrollMediator.getView().removeEventListener(Event.ADDED_TO_STAGE, this.onScrollComponenentAddedToStage);			
+		private function onScrollComponentAddedToStage(event:Event):void {
+			this._scrollMediator.getView().removeEventListener(Event.ADDED_TO_STAGE, this.onScrollComponentAddedToStage);			
 			this._scrollMediator.setScrollContent(this.view.itemsContainer);
 		}
 		

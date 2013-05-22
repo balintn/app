@@ -9,10 +9,12 @@ package inf.application.mediators {
 	import inf.application.handlers.ImageItemHandler;
 	import inf.application.models.EditorBoxModel;
 	import inf.application.models.EnvironmentModel;
+	import inf.application.models.HelpPopupBoxModel;
 	import inf.application.models.ItemsBoxModel;
 	import inf.application.proxies.HandshakeProxy;
 	import inf.application.proxies.ImageLoaderProxy;
 	import inf.application.views.EditorView;
+	import inf.application.views.HelpPopupView;
 	import inf.application.views.ItemsView;
 	import inf.application.views.components.BackgroundedComponent;
 	import inf.utils.Logger;
@@ -70,6 +72,13 @@ package inf.application.mediators {
 					// draw app background
 					this.drawAppBackground();
 					
+					// help popup view
+					var helpModel:HelpPopupBoxModel = HelpPopupBoxModel.getInstance();
+					var helpView:HelpPopupView = new HelpPopupView(helpModel);
+					helpView.x = helpModel.x;
+					helpView.y = helpModel.y;
+					helpView.addEventListener(Event.ADDED_TO_STAGE, this.helpPopupViewAddedToStage);
+					
 					// create editor view
 					var editorModel:EditorBoxModel = EditorBoxModel.getInstance();
 					var editorView:EditorView = new EditorView(editorModel);
@@ -85,18 +94,30 @@ package inf.application.mediators {
 					itemsView.addEventListener(Event.ADDED_TO_STAGE, this.itemsViewAddedToStage);
 					
 					// create mediators
+					Logger.debug("Register HelpPopupMediator...");
+					this.facade.registerMediator(new HelpPopupMediator(helpView));
+					
 					Logger.debug("Register EditorMediator...");
 					this.facade.registerMediator(new EditorMediator(editorView));
 					
 					Logger.debug("Register ItemsMediator...");
 					this.facade.registerMediator(new ItemsMediator(itemsView));
 					
+					this.app.addChild(helpView);
 					this.app.addChild(editorView);
 					this.app.addChild(itemsView);
 					
 					break;
 				
 			}
+		}
+		
+		private function helpPopupViewAddedToStage(event:Event):void {
+			
+			// render
+			(event.currentTarget as HelpPopupView).render();
+			
+			this.setViewsIndex();
 		}
 		
 		private function itemsViewAddedToStage(event:Event):void {
@@ -123,9 +144,11 @@ package inf.application.mediators {
 		private function setViewsIndex():void {
 			var ev:EditorView = (this.facade.retrieveMediator(EditorMediator.NAME) as EditorMediator).view;
 			var iv:ItemsView = (this.facade.retrieveMediator(ItemsMediator.NAME) as ItemsMediator).view;
+			var hv:HelpPopupView = (this.facade.retrieveMediator(HelpPopupMediator.NAME) as HelpPopupMediator).view;
 			
-			if (this.app.contains(ev) && this.app.contains(iv)) {
+			if (this.app.contains(ev) && this.app.contains(iv) && this.app.contains(hv)) {
 				this.app.setChildIndex(iv, this.app.numChildren - 1);
+				this.app.setChildIndex(hv, this.app.numChildren - 1);
 			}
 		}
 		

@@ -7,6 +7,7 @@ package inf.application.proxies {
 	import inf.application.handlers.ImageItemHandler;
 	import inf.application.models.EditorBoxModel;
 	import inf.application.models.EnvironmentModel;
+	import inf.application.models.HelpPopupBoxModel;
 	import inf.application.models.ImageItemModel;
 	import inf.application.models.ItemsBoxModel;
 	import inf.utils.Logger;
@@ -26,6 +27,7 @@ package inf.application.proxies {
 		
 		public static const PROP_BOX_EDITOR:String = "editor";
 		public static const PROP_BOX_ITEMS:String = "items";
+		public static const PROP_BOX_HELP:String = "help";
 		
 		/**
 		 * Stores last response object
@@ -78,6 +80,18 @@ package inf.application.proxies {
 						Logger.info("Environment model created..");
 					} else {
 						throw new Error("Failed to create environment model!");
+					}
+					
+					// help box model
+					if (ObjectUtil.deepObjectKeyExists(response, [HandshakeProxy.PROP_BOXES, HandshakeProxy.PROP_BOX_HELP]) &&
+						response[HandshakeProxy.PROP_BOXES][HandshakeProxy.PROP_BOX_HELP] is Object) {
+						
+						var helpPopupModel:HelpPopupBoxModel = HelpPopupBoxModel.getInstance();
+						helpPopupModel.populateData(response[HandshakeProxy.PROP_BOXES][HandshakeProxy.PROP_BOX_HELP]);
+						
+						Logger.info("Editor box model created..");
+					} else {
+						throw new Error("Failed to create editor box model!");
 					}
 					
 					// editor box model

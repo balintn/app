@@ -93,7 +93,7 @@ package inf.application.mediators {
 			this.view.uploadButton.height = editorModel.btnUploadHeight;
 			this.view.uploadButton.x = editorModel.btnUploadX;
 			this.view.uploadButton.y = editorModel.btnUploadY;
-			this.view.uploadButton.buttonMode = this.view.uploadButton.useHandCursor = true;
+			//this.view.uploadButton.buttonMode = this.view.uploadButton.useHandCursor = true;
 			
 			this.view.clearButton.backgroundColor = editorModel.btnEraseBackgroundColor;
 			this.view.clearButton.backgroundAlpha = editorModel.btnEraseBackgroundAlpha;
@@ -105,7 +105,7 @@ package inf.application.mediators {
 			this.view.clearButton.height = editorModel.btnEraseHeight;
 			this.view.clearButton.x = editorModel.btnEraseX;
 			this.view.clearButton.y = editorModel.btnEraseY;
-			this.view.clearButton.buttonMode = this.view.clearButton.useHandCursor = true;
+			//this.view.clearButton.buttonMode = this.view.clearButton.useHandCursor = true;
 			
 			this.view.render();
 		}

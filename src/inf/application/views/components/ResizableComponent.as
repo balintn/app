@@ -42,7 +42,7 @@ package inf.application.views.components {
 		
 		protected function onThumbMouseOut(event:MouseEvent):void {
 			if (! this._thumb.hasEventListener(Event.ENTER_FRAME)) {
-				Mouse.cursor = MouseCursor.ARROW;
+				Mouse.cursor = MouseCursor.AUTO;
 			}
 		}
 		
@@ -54,7 +54,7 @@ package inf.application.views.components {
 		
 		protected function onThumbMouseUp(event:MouseEvent):void {
 			this._thumb.removeEventListener(Event.ENTER_FRAME, this.onThumbEnterframe);
-			Mouse.cursor = MouseCursor.ARROW;
+			Mouse.cursor = MouseCursor.AUTO;
 		}
 		
 		protected function onThumbEnterframe(event:Event):void {

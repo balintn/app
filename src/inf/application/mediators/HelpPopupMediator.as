@@ -76,11 +76,12 @@ package inf.application.mediators {
 			this.view.closeButton.borderColor = model.btnCloseBorderColor;
 			this.view.closeButton.borderAlpha = model.btnCloseBorderAlpha;
 			this.view.closeButton.borderSize = model.btnCloseBorderSize;
-			this.view.closeButton.setText(model.btnCloseText);
 			this.view.closeButton.width = model.btnCloseWidth;
 			this.view.closeButton.height = model.btnCloseHeight;
+			this.view.closeButton.setText(model.btnCloseText);
 			this.view.closeButton.x = model.btnCloseX;
 			this.view.closeButton.y = model.btnCloseY;
+			this.view.closeButton.textField.width = model.btnCloseWidth;
 			//this.view.closeButton.buttonMode = this.view.closeButton.useHandCursor = true;
 
 			var container:BaseComponent = new BaseComponent(this.view.scrollComponent.width);

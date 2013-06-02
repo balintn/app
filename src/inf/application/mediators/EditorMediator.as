@@ -11,6 +11,7 @@ package inf.application.mediators {
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
 	import flash.ui.Mouse;
+	import flash.ui.MouseCursor;
 	import flash.utils.ByteArray;
 	
 	import inf.application.ApplicationFacade;
@@ -79,6 +80,8 @@ package inf.application.mediators {
 				if (body['additionalInfo'] != null && body['additionalInfo'] == EditorMediator.HELP_ICON_KEY ) {
 					this.view.helpIcon.addChild(body['displayObject'] as DisplayObject);
 					this.view.helpIcon.addEventListener(MouseEvent.CLICK, this.onHelpIconClick);
+					this.view.helpIcon.addEventListener(MouseEvent.MOUSE_OVER, function(event:MouseEvent):void { Mouse.cursor = MouseCursor.BUTTON; });
+					this.view.helpIcon.addEventListener(MouseEvent.MOUSE_OUT, function(event:MouseEvent):void { Mouse.cursor = MouseCursor.AUTO; });
 					this.view.helpIcon.buttonMode = this.view.helpIcon.useHandCursor = true;
 				}
 			}
@@ -88,6 +91,7 @@ package inf.application.mediators {
 			var mediator:HelpPopupMediator = this.facade.retrieveMediator(HelpPopupMediator.NAME) as HelpPopupMediator;
 			if (! mediator.view.visible) {
 				mediator.view.visible = true;
+				Mouse.cursor = MouseCursor.AUTO;
 			}
 		}
 		

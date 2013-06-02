@@ -15,8 +15,6 @@ package inf.application.views.components {
 			
 			this._text = new TextField();
 			this._text.htmlText = text;
-			this._text.multiline = false;
-			this._text.autoSize = TextFieldAutoSize.CENTER;
 			this._text.selectable = false;
 			this.addChild(this._text);
 		}
@@ -26,8 +24,7 @@ package inf.application.views.components {
 			
 			super.render();
 			
-			this.width = this._text.width;
-			this.height = this._text.height;
+			this._text.x = (this.width - this._text.textWidth) / 2;
 			
 			this.setChildIndex(this._text, this.numChildren - 1);
 		}

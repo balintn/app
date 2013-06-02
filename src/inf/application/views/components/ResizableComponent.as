@@ -5,7 +5,17 @@ package inf.application.views.components {
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursor;
 	
+	import inf.application.ApplicationFacade;
+	
 	public class ResizableComponent extends BackgroundedComponent {
+		
+		/**
+		 * @TODO no ennek nem itt a helye, kell csinalni szepen kontrollert es minden olyat atvezetni oda!!
+		 */
+		public static const RESIZE_FINISHED:String = "resizeFinished";
+		
+		public static const MIN_WIDTH:Number = 5;
+		public static const MIN_HEIGHT:Number = 5;
 		
 		private var _thumb:BackgroundedComponent;
 		
@@ -43,6 +53,8 @@ package inf.application.views.components {
 		protected function onThumbMouseOut(event:MouseEvent):void {
 			if (! this._thumb.hasEventListener(Event.ENTER_FRAME)) {
 				Mouse.cursor = MouseCursor.AUTO;
+				// TODO nem itt a helye, olvasd el felul
+				ApplicationFacade.getInstance().sendNotification(ResizableComponent.RESIZE_FINISHED);
 			}
 		}
 		
@@ -55,12 +67,18 @@ package inf.application.views.components {
 		protected function onThumbMouseUp(event:MouseEvent):void {
 			this._thumb.removeEventListener(Event.ENTER_FRAME, this.onThumbEnterframe);
 			Mouse.cursor = MouseCursor.AUTO;
+			// TODO nem itt a helye, olvasd el felul
+			ApplicationFacade.getInstance().sendNotification(ResizableComponent.RESIZE_FINISHED);
 		}
 		
 		protected function onThumbEnterframe(event:Event):void {
 			
 			var newX:Number = this.mouseX - this._thumbOffsetX;
 			var newY:Number = (this.mouseX - this._thumbOffsetX) * this.height / this.width;
+
+			if (newX <= ResizableComponent.MIN_WIDTH || newY <= ResizableComponent.MIN_HEIGHT) {
+				return;
+			}
 			
 			this._thumb.x = newX;
 			this._thumb.y = newY;

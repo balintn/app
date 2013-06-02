@@ -20,6 +20,7 @@ package inf.application.mediators {
 	import inf.application.views.components.BaseComponent;
 	import inf.application.views.components.DraggedImageComponent;
 	import inf.application.views.components.ImageItemComponent;
+	import inf.application.views.components.ResizableComponent;
 	import inf.application.views.components.ScrollComponent;
 	import inf.utils.Hash;
 	import inf.utils.Logger;
@@ -162,7 +163,9 @@ package inf.application.mediators {
 		
 		
 		public override function listNotificationInterests():Array {
-			return [ApplicationFacade.IMAGE_ITEM_BITMAP_LOADED];
+			return [ApplicationFacade.IMAGE_ITEM_BITMAP_LOADED,
+					ResizableComponent.RESIZE_FINISHED
+			];
 		}
 		
 		
@@ -202,6 +205,25 @@ package inf.application.mediators {
 						viewComp.render();
 					}
 				}
+			} else if (notification.getName() == ResizableComponent.RESIZE_FINISHED) {
+				this.handleResizeEnd();
+			}
+		}
+		
+		private function handleResizeEnd():void {
+			
+			if (this._draggedImage.hasEventListener(Event.ENTER_FRAME)) {
+				this._draggedImage.removeEventListener(Event.ENTER_FRAME, this.onDraggedImageEnterframe);
+			}
+			
+			var ev:EditorView = (this.facade.retrieveMediator(EditorMediator.NAME) as EditorMediator).view;
+			var evRect:Rectangle = ev.getRect(ev.stage);
+			var diRect:Rectangle = this._draggedImage.getRect(ev.stage);
+			
+			// drops image if it is not placed on editor area
+			if (! evRect.containsRect(diRect)) {
+				this.removeDraggableImageFromStage();	
+				this._draggedImage.visible = false;
 			}
 		}
 		
@@ -229,22 +251,10 @@ package inf.application.mediators {
 		}
 		
 		private function onImageMouseUp(event:MouseEvent):void {
-			var comp:ImageItemComponent = event.currentTarget as ImageItemComponent;
+
 			this._draggedImage.stopDrag();
 			
-			if (this._draggedImage.hasEventListener(Event.ENTER_FRAME)) {
-				this._draggedImage.removeEventListener(Event.ENTER_FRAME, this.onDraggedImageEnterframe);
-			}
-			
-			var ev:EditorView = (this.facade.retrieveMediator(EditorMediator.NAME) as EditorMediator).view;
-			var evRect:Rectangle = ev.getRect(ev.stage);
-			var diRect:Rectangle = this._draggedImage.getRect(ev.stage);
-			
-			// drops image if it is not placed on editor area
-			if (! evRect.containsRect(diRect)) {
-				this.removeDraggableImageFromStage();	
-				this._draggedImage.visible = false;
-			}
+			this.handleResizeEnd();
 			
 		}
 		

@@ -136,7 +136,7 @@ package inf.application.handlers {
 			for (var key:Object in ImageItemHandler._items.getAll()) {
 				var value:Boolean = ImageItemHandler._items.get(key);
 				if (value === false) {
-					proxy.loadImage(key.filePath, key.id);
+					proxy.loadImage(key.filePath, {itemId: key.id});
 				}
 			}
 			

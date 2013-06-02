@@ -172,32 +172,34 @@ package inf.application.mediators {
 				// image downloaded, store it in the model
 				var body:Object = notification.getBody();
 				
-				var id:uint = body['additionalInfo'];
-				var image:DisplayObject = body['displayObject'] as DisplayObject;
-				image.cacheAsBitmap = true;
-				
-				var model:ImageItemModel = ImageItemHandler.getItemById(id);
-				
-				if (model != null) {
-					model.setImage(image);
-				} else {
-					Logger.error("Image item by id=" + id + " not found! Failed to store downloaded image!");
-				}
-				
-				// attach to its viewcomponent
-				var viewComp:ImageItemComponent = this._itemViewsById.hasOwnProperty(model.id) ? this._itemViewsById[model.id] : null;
-				if (viewComp != null) {
+				if (body['additionalInfo'] != null && body['additionalInfo'].hasOwnProperty("itemId")) {
+					var id:uint = body['additionalInfo']['itemId'];
+					var image:DisplayObject = body['displayObject'] as DisplayObject;
+					image.cacheAsBitmap = true;
 					
-					var targetWidth:Number = ItemsBoxModel.getInstance().itemWidth;
-										
-					// set image dimensions
-					var multiplier:Number = (image.width < targetWidth) ? image.width / targetWidth : targetWidth / image.width;
-					image.width *= multiplier;
-					image.height *= multiplier;
-					image.addEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage(viewComp));
-					viewComp.addEventListener(MouseEvent.MOUSE_DOWN, this.onImageMouseDown);
-					viewComp.addImage(image, model.marked);
-					viewComp.render();
+					var model:ImageItemModel = ImageItemHandler.getItemById(id);
+					
+					if (model != null) {
+						model.setImage(image);
+					} else {
+						Logger.error("Image item by id=" + id + " not found! Failed to store downloaded image!");
+					}
+					
+					// attach to its viewcomponent
+					var viewComp:ImageItemComponent = this._itemViewsById.hasOwnProperty(model.id) ? this._itemViewsById[model.id] : null;
+					if (viewComp != null) {
+						
+						var targetWidth:Number = ItemsBoxModel.getInstance().itemWidth;
+											
+						// set image dimensions
+						var multiplier:Number = (image.width < targetWidth) ? image.width / targetWidth : targetWidth / image.width;
+						image.width *= multiplier;
+						image.height *= multiplier;
+						image.addEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage(viewComp));
+						viewComp.addEventListener(MouseEvent.MOUSE_DOWN, this.onImageMouseDown);
+						viewComp.addImage(image, model.marked);
+						viewComp.render();
+					}
 				}
 			}
 		}

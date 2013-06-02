@@ -2,6 +2,7 @@ package inf.application.views {
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Shape;
+	import flash.display.Sprite;
 	
 	import inf.application.models.EditorBoxModel;
 	import inf.application.views.components.BackgroundedComponent;
@@ -21,6 +22,7 @@ package inf.application.views {
 		private var _imageContainer:BackgroundedComponent;
 		private var _imageContainerMask:Shape;
 		private var _loadedImage:DisplayObject;
+		private var _helpIcon:Sprite;
 		
 		public function EditorView(model:EditorBoxModel) {
 			super(model);
@@ -36,6 +38,9 @@ package inf.application.views {
 			this._imageContainer.borderColor = 0xc3c3c3;
 			this._imageContainer.borderSize = 0;
 			this.addChild(this._imageContainer);
+			
+			this._helpIcon = new Sprite();
+			this.addChild(this._helpIcon);
 			
 			this._imageContainerMask = new Shape();
 			this.addChild(this._imageContainerMask);
@@ -108,6 +113,10 @@ package inf.application.views {
 		
 		public function get clearButton():ButtonComponent {
 			return this._clearButton;
+		}
+		
+		public function get helpIcon():Sprite {
+			return this._helpIcon;
 		}
 	}
 }

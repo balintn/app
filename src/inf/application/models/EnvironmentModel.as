@@ -22,6 +22,12 @@ package inf.application.models {
 		private var _appBackgroundAlpha:Number;
 		
 		/**
+		 * Help icon url
+		 * @var String
+		 */
+		private var _helpIcon:String;
+		
+		/**
 		 * Singleton instance
 		 * @var EnvironmentModel
 		 */
@@ -40,6 +46,10 @@ package inf.application.models {
 		public function get appBackgroundAlpha():Number {
 			return this._appBackgroundAlpha;
 		}
+
+		public function get helpIcon():String {
+			return this._helpIcon;
+		}
 		
 		internal function setAppBackgroundColor(value:uint):void {
 			this._appBackgroundColor = value;
@@ -47,6 +57,10 @@ package inf.application.models {
 		
 		internal function setAppBackgroundAlpha(value:Number):void {
 			this._appBackgroundAlpha = value;
+		}
+		
+		internal function setHelpIcon(value:String):void {
+			this._helpIcon = value;
 		}
 		
 		/**

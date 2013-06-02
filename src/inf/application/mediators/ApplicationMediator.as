@@ -124,10 +124,6 @@ package inf.application.mediators {
 			// render
 			(event.currentTarget as ItemsView).render();
 			
-			// register image loader proxy
-			Logger.debug("Register ImageLoaderProxy...");
-			this.facade.registerProxy(new ImageLoaderProxy());
-			
 			// load images
 			ImageItemHandler.loadImages();
 			

@@ -10,14 +10,18 @@ package inf.application.mediators {
 	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
+	import flash.ui.Mouse;
 	import flash.utils.ByteArray;
 	
+	import inf.application.ApplicationFacade;
 	import inf.application.models.EditorBoxModel;
 	import inf.application.models.EnvironmentModel;
+	import inf.application.proxies.ImageLoaderProxy;
 	import inf.application.views.EditorView;
 	
 	import mx.utils.*;
 	
+	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
 	/**
@@ -27,6 +31,8 @@ package inf.application.mediators {
 	public class EditorMediator extends Mediator {
 		
 		public static const NAME:String = "editorMediator";
+		
+		public static const HELP_ICON_KEY:String = "helpIcon";
 		
 		private var _fileReference:FileReference;
 		private var _fileFilter:FileFilter;
@@ -43,6 +49,46 @@ package inf.application.mediators {
 			this._fileReference = new FileReference();
 			this._fileReference.addEventListener(Event.SELECT, this.onFileSelect);
 			this._fileReference.addEventListener(Event.CANCEL, this.onFileCancel);
+			
+			var helpIconUrl:String = EnvironmentModel.getInstance().helpIcon;
+			if (helpIconUrl != "") {
+				var proxy:ImageLoaderProxy = this.facade.retrieveProxy(ImageLoaderProxy.NAME) as ImageLoaderProxy;
+				proxy.loadImage(helpIconUrl, EditorMediator.HELP_ICON_KEY);
+			}
+		}
+		
+		/**
+		 * Returns notification list
+		 * @return Array
+		 */
+		public override function listNotificationInterests():Array{
+			return [
+				ApplicationFacade.IMAGE_ITEM_BITMAP_LOADED
+			];
+		}
+		
+		/**
+		 * Notification handling
+		 * @param INotification notification
+		 */
+		public override function handleNotification(notification:INotification):void {
+			
+			if (notification.getName() == ApplicationFacade.IMAGE_ITEM_BITMAP_LOADED) {
+				var body:Object = notification.getBody();
+				
+				if (body['additionalInfo'] != null && body['additionalInfo'] == EditorMediator.HELP_ICON_KEY ) {
+					this.view.helpIcon.addChild(body['displayObject'] as DisplayObject);
+					this.view.helpIcon.addEventListener(MouseEvent.CLICK, this.onHelpIconClick);
+					this.view.helpIcon.buttonMode = this.view.helpIcon.useHandCursor = true;
+				}
+			}
+		}
+		
+		protected function onHelpIconClick(event:MouseEvent):void {
+			var mediator:HelpPopupMediator = this.facade.retrieveMediator(HelpPopupMediator.NAME) as HelpPopupMediator;
+			if (! mediator.view.visible) {
+				mediator.view.visible = true;
+			}
 		}
 		
 		protected function onFileSelect(event:Event):void {

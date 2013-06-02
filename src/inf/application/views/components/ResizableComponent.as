@@ -3,6 +3,7 @@ package inf.application.views.components {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.ui.Mouse;
+	import flash.ui.MouseCursor;
 	
 	public class ResizableComponent extends BackgroundedComponent {
 		
@@ -30,7 +31,19 @@ package inf.application.views.components {
 			
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.onComponentAddedToStage);
 			
+			this._thumb.addEventListener(MouseEvent.MOUSE_OVER, this.onThumbMouseOver);
+			this._thumb.addEventListener(MouseEvent.MOUSE_OUT, this.onThumbMouseOut);
 			this.stage.addEventListener(MouseEvent.MOUSE_UP, this.onThumbMouseUp);
+		}
+		
+		protected function onThumbMouseOver(event:MouseEvent):void {
+			Mouse.cursor = MouseCursor.BUTTON;
+		}
+		
+		protected function onThumbMouseOut(event:MouseEvent):void {
+			if (! this._thumb.hasEventListener(Event.ENTER_FRAME)) {
+				Mouse.cursor = MouseCursor.ARROW;
+			}
 		}
 		
 		protected function onThumbMouseDown(event:MouseEvent):void {
@@ -41,6 +54,7 @@ package inf.application.views.components {
 		
 		protected function onThumbMouseUp(event:MouseEvent):void {
 			this._thumb.removeEventListener(Event.ENTER_FRAME, this.onThumbEnterframe);
+			Mouse.cursor = MouseCursor.ARROW;
 		}
 		
 		protected function onThumbEnterframe(event:Event):void {

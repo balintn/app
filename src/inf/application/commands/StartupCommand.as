@@ -22,8 +22,8 @@ package inf.application.commands {
 			var facade:ApplicationFacade = ApplicationFacade.getInstance();
 			
 			// register handshake proxy
+//			facade.registerProxy(new HandshakeProxy("getInitialData.php"));
 			facade.registerProxy(new HandshakeProxy("http://localhost/flashapp/getInitialData.php"));			
-			//facade.registerProxy(new HandshakeProxy("http://tintapatronok.eu/getInitialData.php"));			
 			
 			// register image loader proxy
 			Logger.debug("Register ImageLoaderProxy...");

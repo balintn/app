@@ -15,6 +15,7 @@ package inf.application.mediators {
 	import inf.application.models.ImageItemModel;
 	import inf.application.models.ItemsBoxModel;
 	import inf.application.views.EditorView;
+	import inf.application.views.HelpPopupView;
 	import inf.application.views.ItemsView;
 	import inf.application.views.components.BaseComponent;
 	import inf.application.views.components.DraggedImageComponent;
@@ -271,7 +272,20 @@ package inf.application.mediators {
 			
 			if (this._draggedImage == null) {
 				this._draggedImage = new DraggedImageComponent();
-				this.view.stage.addChild(this._draggedImage);
+				//this.view.stage.addChild(this._draggedImage);
+				
+				var app:Sprite = ApplicationMediator(this.facade.retrieveMediator(ApplicationMediator.NAME)).app;
+				app.addChild(this._draggedImage);
+				
+				var ev:EditorView = (this.facade.retrieveMediator(EditorMediator.NAME) as EditorMediator).view;
+				var iv:ItemsView = (this.facade.retrieveMediator(ItemsMediator.NAME) as ItemsMediator).view;
+				var hv:HelpPopupView = (this.facade.retrieveMediator(HelpPopupMediator.NAME) as HelpPopupMediator).view;
+				
+				if (app.contains(ev) && app.contains(iv) && app.contains(hv)) {
+					app.setChildIndex(iv, app.numChildren - 1);
+					app.setChildIndex(this._draggedImage, app.numChildren - 1);
+					app.setChildIndex(hv, app.numChildren - 1);
+				}
 				
 				this._draggedImage.addEventListener(MouseEvent.MOUSE_UP, this.onImageMouseUp);
 				this._draggedImage.addEventListener(MouseEvent.MOUSE_DOWN, this.onImageMouseDown);

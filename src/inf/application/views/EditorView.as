@@ -34,7 +34,7 @@ package inf.application.views {
 			this._imageContainer = new BackgroundedComponent();
 			this._imageContainer.backgroundAlpha = 0;
 			this._imageContainer.borderColor = 0xc3c3c3;
-			this._imageContainer.borderSize = 1;
+			this._imageContainer.borderSize = 0;
 			this.addChild(this._imageContainer);
 			
 			this._imageContainerMask = new Shape();

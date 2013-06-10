@@ -164,6 +164,7 @@ package inf.application.mediators {
 		
 		public override function listNotificationInterests():Array {
 			return [ApplicationFacade.IMAGE_ITEM_BITMAP_LOADED,
+					ApplicationFacade.IMAGE_ITEM_BITMAP_ERROR,
 					ResizableComponent.RESIZE_FINISHED
 			];
 		}
@@ -171,17 +172,33 @@ package inf.application.mediators {
 		
 		public override function handleNotification(notification:INotification):void {
 			
-			if (notification.getName() == ApplicationFacade.IMAGE_ITEM_BITMAP_LOADED) {
+			if (notification.getName() == ApplicationFacade.IMAGE_ITEM_BITMAP_LOADED || notification.getName() == ApplicationFacade.IMAGE_ITEM_BITMAP_ERROR) {
 				
 				// image downloaded, store it in the model
 				var body:Object = notification.getBody();
 				
 				if (body['additionalInfo'] != null && body['additionalInfo'].hasOwnProperty("itemId")) {
 					var id:uint = body['additionalInfo']['itemId'];
-					var image:DisplayObject = body['displayObject'] as DisplayObject;
-					image.cacheAsBitmap = true;
 					
 					var model:ImageItemModel = ImageItemHandler.getItemById(id);
+					
+					if (notification.getName() == ApplicationFacade.IMAGE_ITEM_BITMAP_ERROR) {
+						
+						if (model != null) {
+							var viewComp:ImageItemComponent = this._itemViewsById.hasOwnProperty(model.id) ? this._itemViewsById[model.id] : null;
+							if (viewComp != null) {
+								viewComp.visible = false;
+								viewComp.height = viewComp.width = 0;
+							}
+						} else {
+							Logger.error("Image item by id=" + id + " not found! Failed to store downloaded image!");
+						}
+						
+						return;
+					}
+					
+					var image:DisplayObject = body['displayObject'] as DisplayObject;
+					image.cacheAsBitmap = true;
 					
 					if (model != null) {
 						model.setImage(image);
@@ -193,16 +210,19 @@ package inf.application.mediators {
 					var viewComp:ImageItemComponent = this._itemViewsById.hasOwnProperty(model.id) ? this._itemViewsById[model.id] : null;
 					if (viewComp != null) {
 						
-						var targetWidth:Number = ItemsBoxModel.getInstance().itemWidth;
-											
-						// set image dimensions
-						var multiplier:Number = (image.width < targetWidth) ? image.width / targetWidth : targetWidth / image.width;
-						image.width *= multiplier;
-						image.height *= multiplier;
-						image.addEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage(viewComp));
-						viewComp.addEventListener(MouseEvent.MOUSE_DOWN, this.onImageMouseDown);
-						viewComp.addImage(image, model.marked);
-						viewComp.render();
+						if (notification.getName() == ApplicationFacade.IMAGE_ITEM_BITMAP_LOADED) {
+						
+							var targetWidth:Number = ItemsBoxModel.getInstance().itemWidth;
+												
+							// set image dimensions
+							var multiplier:Number = (image.width < targetWidth) ? image.width / targetWidth : targetWidth / image.width;
+							image.width *= multiplier;
+							image.height *= multiplier;
+							image.addEventListener(Event.ADDED_TO_STAGE, this.onImageAddedToStage(viewComp));
+							viewComp.addEventListener(MouseEvent.MOUSE_DOWN, this.onImageMouseDown);
+							viewComp.addImage(image, model.marked);
+							viewComp.render();
+						}
 					}
 				}
 			} else if (notification.getName() == ResizableComponent.RESIZE_FINISHED) {

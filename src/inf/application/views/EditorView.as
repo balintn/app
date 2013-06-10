@@ -15,7 +15,7 @@ package inf.application.views {
 	 */
 	public class EditorView extends BoxComponent {
 		
-		public static var PADDING:int = 20;
+		public static var PADDING:int = 30;
 		
 		private var _uploadButton:ButtonComponent;
 		private var _clearButton:ButtonComponent;

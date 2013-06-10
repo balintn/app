@@ -21,7 +21,7 @@ package inf.application.views {
 		public static const SCROLL_COMP_PADDING_LEFT:Number = 20;
 		public static const SCROLL_COMP_PADDING_RIGHT:Number = 20;
 		public static const SCROLL_COMP_PADDING_TOP:Number = 20;
-		public static const SCROLL_COMP_PADDING_BOTTOM:Number = 20;
+		public static const SCROLL_COMP_PADDING_BOTTOM:Number = 40;
 		
 		
 		/**

@@ -37,7 +37,11 @@ package inf.application {
 		 */
 		public static const IMAGE_ITEM_BITMAP_LOADED:String = "onImageItemBitmapLoaded";
 		
-		
+		/**
+		 * Notification if failed to load image from the server (IO)
+		 * @var String
+		 */
+		public static const IMAGE_ITEM_BITMAP_ERROR:String = "onImageItemBitmapError";
 		/**
 		 * Application
 		 * @var Sprite

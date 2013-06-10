@@ -52,6 +52,11 @@ package inf.application.proxies {
 		
 		protected function onIOError(event:IOErrorEvent):void {
 			Logger.error("IO error occured during image download!");
+			
+			var loader:Loader = event.currentTarget.loader as Loader;
+			var additionalInfo:Object = this._queue.get(loader, null);
+			
+			this.sendNotification(ApplicationFacade.IMAGE_ITEM_BITMAP_ERROR, {displayObject: loader.content, additionalInfo: additionalInfo});
 		}
 		
 	}

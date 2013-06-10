@@ -238,6 +238,11 @@ package inf.application.mediators {
 				var comp:ImageItemComponent = event.currentTarget as ImageItemComponent;
 				var clonedImage:DisplayObject = comp.getImageClone();
 				
+				var newX:Number = 200;
+				var newY:Number = (200) * clonedImage.height / clonedImage.width;
+				clonedImage.width = newX;
+				clonedImage.height = newY;
+				
 				this.addDraggableImageToStage(clonedImage);
 				
 				this._draggedImage.render();
